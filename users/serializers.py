@@ -3,7 +3,7 @@ from rest_framework.validators import UniqueValidator
 from .models import User
 
 
-class UserSerializer(serializers.ModelField):
+class UserSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
         fields = [
@@ -38,7 +38,7 @@ class UserSerializer(serializers.ModelField):
         }
 
     def create(self, validated_data: dict) -> User:
-        is_colaborator = validated_data["is_colaborator"]
+        is_colaborator = validated_data.get("is_colaborator")
 
         user = (
             User.objects.create_superuser(**validated_data)

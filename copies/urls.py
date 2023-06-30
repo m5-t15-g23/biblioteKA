@@ -1,3 +1,7 @@
 from django.urls import path
 
-urlpatterns = []
+from . import views
+
+urlpatterns = [
+    path("copies/", views.CopyView.as_view())
+]

@@ -1,4 +1,5 @@
 from django.db import models
+from datetime import datetime
 
 
 class Language(models.TextChoices):
@@ -18,7 +19,7 @@ class Book(models.Model):
     title = models.CharField(max_length=255)
     author = models.CharField(max_length=255)
     description = models.TextField()
-    publication_year = models.DateTimeField()
+    publication_year = models.DateTimeField(null=True, default=datetime.now())
     page_numbers = models.IntegerField()
     language = models.CharField(
         max_length=50,
@@ -26,7 +27,7 @@ class Book(models.Model):
         default=Language.NOTINFORMED
     )
     genre = models.CharField(max_length=255)
-    disponibility = models.BooleanField(default=True)
+    disponibility = models.BooleanField(null=True, default=True)
     copies_number = models.IntegerField()
 
     user = models.ManyToManyField(
