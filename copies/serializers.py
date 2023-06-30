@@ -1,14 +1,14 @@
 from rest_framework import serializers
 
-from .models import Copie
+from .models import Copy
 from books.serializers import BookSerializer
 
 
-class CopieSerializer(serializers.ModelField):
+class CopySerializer(serializers.ModelField):
     book = BookSerializer(read_only=True)
 
     class Meta:
-        model = Copie
+        model = Copy
         fields = [
             "id",
             "status_for_loan",

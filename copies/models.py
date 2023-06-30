@@ -1,11 +1,11 @@
 from django.db import models
 
 
-class Copie(models.Model):
+class Copy(models.Model):
     status_for_loan = models.BooleanField(null=True, default=True)
 
     book = models.ForeignKey(
         "books.Book",
         on_delete=models.PROTECT,
-        related_name="copie"
+        related_name="copy"
     )

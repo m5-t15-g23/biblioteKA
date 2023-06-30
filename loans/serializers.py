@@ -1,18 +1,20 @@
 from rest_framework import serializers
-from copies.serializers import CopieSerializer
+from copies.serializers import CopySerializer
 from loans.models import Loan
 from users.serializers import UserSerializer
 
+
 class LoanSerializer(serializers.ModelSerializer):
     user = UserSerializer(read_only=True)
-    copie = CopieSerializer(read_only=True)
+    copy = CopySerializer(read_only=True)
 
-    class Meta: 
+    class Meta:
         model = Loan
         fields = [
             "id",
             "loan_date",
             "loan_return",
             "user",
-            "copie"
+            "copy"
         ]
+        read_only_fields = ["id", "user", "copy"]
