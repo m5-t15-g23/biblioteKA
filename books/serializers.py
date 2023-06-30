@@ -5,7 +5,7 @@ from users.serializers import UserSerializer
 
 
 class BookSerializer(serializers.ModelSerializer):
-    user = serializers.UserSerializer(read_only=True)
+    user = UserSerializer(read_only=True)
 
     class Meta:
         model = Book
