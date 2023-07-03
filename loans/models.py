@@ -6,8 +6,8 @@ class Loan(models.Model):
     loan_return = models.DateTimeField()
 
     user = models.ForeignKey(
-        "users.User", on_delete=models.CASCADE, related_name="loan"
+        "users.User", on_delete=models.CASCADE, related_name="loans"
     )
     copy = models.ForeignKey(
-        "copies.Copy", on_delete=models.PROTECT, related_name="copy"
+        "copies.Copy", on_delete=models.PROTECT, related_name="loans"
     )
