@@ -5,6 +5,7 @@ from django.shortcuts import get_object_or_404
 from loans.models import Loan
 from loans.serializers import LoanSerializer
 from copies.models import Copy
+from users.models import User
 
 
 class LoanView(generics.ListAPIView):
@@ -50,3 +51,16 @@ class LoanCopyDetailView(generics.ListCreateAPIView):
             user=user,
             copy=copy
         )
+
+
+class LoanColaboratorDetailView(generics.ListAPIView):
+    authentication_classes = [JWTAuthentication]
+    serializer_class = LoanSerializer
+
+    lookup_url_kwarg = "student_id"
+
+    def get_queryset(self):
+        student_id = self.kwargs.get("student_id")
+        student = get_object_or_404(User, pk=student_id)
+
+        return Loan.objects.filter(user=student)
