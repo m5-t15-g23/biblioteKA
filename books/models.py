@@ -1,5 +1,6 @@
 from django.db import models
 from datetime import datetime
+from django.utils import timezone
 
 
 class Language(models.TextChoices):
@@ -19,7 +20,7 @@ class Book(models.Model):
     title = models.CharField(max_length=255)
     author = models.CharField(max_length=255)
     description = models.TextField()
-    publication_year = models.DateTimeField(null=True, default=datetime.now())
+    publication_year = models.DateField(null=True, default=timezone.now())
     page_numbers = models.IntegerField()
     language = models.CharField(
         max_length=50,

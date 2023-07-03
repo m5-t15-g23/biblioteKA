@@ -1,5 +1,6 @@
 from rest_framework import serializers
-from datetime import datetime, timedelta
+from datetime import timedelta
+from django.utils import timezone
 
 from copies.serializers import CopySerializer
 from loans.models import Loan
@@ -7,7 +8,7 @@ from users.serializers import UserSerializer
 
 
 def return_date():
-    loan_date_return = datetime.now() + timedelta(days=30)
+    loan_date_return = timezone.now() + timedelta(days=30)
     week_day = loan_date_return.weekday()
 
     match week_day:
