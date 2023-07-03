@@ -30,7 +30,7 @@ class Book(models.Model):
     disponibility = models.BooleanField(null=True, default=True)
     copies_number = models.IntegerField()
 
-    user = models.ManyToManyField(
+    users = models.ManyToManyField(
         "users.User",
         related_name="books",
     )

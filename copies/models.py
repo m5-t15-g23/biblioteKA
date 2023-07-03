@@ -7,5 +7,5 @@ class Copy(models.Model):
     book = models.ForeignKey(
         "books.Book",
         on_delete=models.PROTECT,
-        related_name="copy"
+        related_name="copies"
     )
