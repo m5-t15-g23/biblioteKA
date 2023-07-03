@@ -9,23 +9,23 @@ from users.models import User
 from users.permissions import IsAuthenticated, IsColaborator
 
 
-class LoanView(generics.ListAPIView):
-    authentication_classes = [JWTAuthentication]
-    permission_classes = [IsAuthenticated]
+# class LoanView(generics.ListAPIView):
+#     authentication_classes = [JWTAuthentication]
+#     permission_classes = [IsAuthenticated]
 
-    queryset = Loan.objects.all()
+#     queryset = Loan.objects.all()
 
-    def get_queryset(self):
-        user = self.request.user
-        is_colaborator = user.is_colaborator
+#     def get_queryset(self):
+#         user = self.request.user
+#         is_colaborator = user.is_colaborator
 
-        if is_colaborator is False:
-            user_id = user.id
-            return Loan.objects.filter(user_id=user_id)
+#         if is_colaborator is False:
+#             user_id = user.id
+#             return Loan.objects.filter(user_id=user_id)
 
-        return Loan.objects.all()
+#         return Loan.objects.all()
 
-    serializer_class = LoanSerializer
+#     serializer_class = LoanSerializer
 
 
 class LoanCopyDetailView(generics.ListCreateAPIView):
@@ -37,10 +37,16 @@ class LoanCopyDetailView(generics.ListCreateAPIView):
 
     def get_queryset(self):
         req_method = self.request.method
-        copy_id = self.kwargs.get("copy_id")
+        copy_id = self.kwargs.get("copy_id", None)
+        user = self.request.user
+        is_colaborator = user.is_colaborator
 
-        if req_method == "GET":
+        if req_method == "GET" and is_colaborator is True and copy_id is not None:
             return Loan.objects.filter(copy_id=copy_id)
+        elif req_method == "GET" and is_colaborator is False and copy_id is None:
+            return Loan.objects.filter(user_id=user.id)
+        elif req_method == "GET" and is_colaborator is False:
+            return Loan.objects.filter(copy_id=copy_id, user_id=user.id)
 
         return Loan.objects.all()
 
