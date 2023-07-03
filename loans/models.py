@@ -2,10 +2,10 @@ from django.db import models
 
 
 class Loan(models.Model):
-    loan_date = models.DateField(auto_now_add=True)
-    loan_return = models.DateField()
+    loan_date = models.DateTimeField(auto_now_add=True)
+    loan_return = models.DateTimeField()
     is_active = models.BooleanField(null=True, default=True)
-    returned_at = models.DateField(null=True)
+    returned_at = models.DateTimeField(null=True)
 
     user = models.ForeignKey(
         "users.User", on_delete=models.CASCADE, related_name="loans"
