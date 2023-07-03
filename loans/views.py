@@ -6,10 +6,12 @@ from loans.models import Loan
 from loans.serializers import LoanSerializer
 from copies.models import Copy
 from users.models import User
+from users.permissions import IsAuthenticated, IsColaborator
 
 
 class LoanView(generics.ListAPIView):
     authentication_classes = [JWTAuthentication]
+    permission_classes = [IsAuthenticated]
 
     queryset = Loan.objects.all()
 
@@ -28,6 +30,7 @@ class LoanView(generics.ListAPIView):
 
 class LoanCopyDetailView(generics.ListCreateAPIView):
     authentication_classes = [JWTAuthentication]
+    permission_classes = [IsAuthenticated]
 
     serializer_class = LoanSerializer
     lookup_url_kwarg = "copy_id"
@@ -56,6 +59,7 @@ class LoanCopyDetailView(generics.ListCreateAPIView):
 class LoanColaboratorDetailView(generics.ListAPIView):
     authentication_classes = [JWTAuthentication]
     serializer_class = LoanSerializer
+    permission_classes = [IsColaborator]
 
     lookup_url_kwarg = "student_id"
 
