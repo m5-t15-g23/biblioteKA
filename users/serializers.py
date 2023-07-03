@@ -4,39 +4,6 @@ from .models import User
 
 
 class UserSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = User
-        fields = [
-            "id",
-            "email",
-            "username",
-            "first_name",
-            "last_name",
-            "password",
-            "is_colaborator",
-            "status_for_loan"
-        ]
-        read_only_fields = ["id"]
-        extra_kwargs = {
-            "email": {
-                "validators": [
-                    UniqueValidator(
-                        queryset=User.objects.all(),
-                        message="Email already in use"
-                    )
-                ]
-            },
-            "username": {
-                "validators": [
-                    UniqueValidator(
-                        queryset=User.objects.all(),
-                        message="Username already in use"
-                    )
-                ]
-            },
-            "password": {"write_only": True}
-        }
-
     def create(self, validated_data: dict) -> User:
         is_colaborator = validated_data.get("is_colaborator")
 
@@ -60,3 +27,59 @@ class UserSerializer(serializers.ModelSerializer):
 
         user.save()
         return user
+
+    class Meta:
+        model = User
+        fields = [
+            "id",
+            "email",
+            "username",
+            "first_name",
+            "last_name",
+            "password",
+            "is_colaborator",
+            "status_for_loan"
+        ]
+        extra_kwargs = {
+            "email": {
+                "validators": [
+                    UniqueValidator(
+                        queryset=User.objects.all(),
+                        message="Email already in use"
+                    )
+                ]
+            },
+            "username": {
+                "validators": [
+                    UniqueValidator(
+                        queryset=User.objects.all(),
+                        message="Username already in use"
+                    )
+                ]
+            },
+            "password": {"write_only": True}
+        }
+
+
+class StudentStatusSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = User
+        fields = [
+            "id",
+            "email",
+            "username",
+            "first_name",
+            "last_name",
+            "password",
+            "is_colaborator",
+            "status_for_loan"
+        ]
+        read_only_fields = ["status_for_loan"]
+
+    def to_representation(self, instance):
+        return {
+            "id": instance.id,
+            "email": instance.email,
+            "username": instance.username,
+            "status_for_loan": instance.status_for_loan
+        }
