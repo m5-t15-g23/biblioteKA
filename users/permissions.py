@@ -17,3 +17,10 @@ class IsColaboratorOrReadOnly(permissions.BasePermission):
         if request.method in ['GET', 'HEAD', 'OPTIONS']:
             return True
         return request.user.is_authenticated and request.user.is_colaborator
+
+
+class IsAuthenticatedOrCreate(permissions.BasePermission):
+    def has_permission(self, request, view: View):
+        if request.method == 'POST':
+            return True
+        return request.user.is_authenticated
