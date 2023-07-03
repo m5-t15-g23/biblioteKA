@@ -11,7 +11,7 @@ class CopySerializer(serializers.ModelSerializer):
         model = Copy
         fields = [
             "id",
-            "status_for_loan",
+            "is_avaliable",
             "book"
         ]
         read_only_fields = ["id", "book"]
@@ -21,5 +21,5 @@ class CopySerializer(serializers.ModelSerializer):
             "id": instance.id,
             "book_id": instance.book.id,
             "book_title": instance.book.title,
-            "status_for_loan": instance.status_for_loan
+            "is_avaliable": instance.is_avaliable
         }

@@ -17,4 +17,4 @@ class BookView(generics.ListCreateAPIView):
     def perform_create(self, serializer):
         user = self.request.user
 
-        serializer.save().user.add(user)
+        serializer.save().users.add(user)

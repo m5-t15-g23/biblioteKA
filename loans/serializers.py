@@ -30,16 +30,25 @@ class LoanSerializer(serializers.ModelSerializer):
             "id",
             "loan_date",
             "loan_return",
+            "is_active",
+            "returned_at",
             "user",
             "copy"
         ]
         read_only_fields = ["id", "user", "copy", "loan_return"]
+
+    def validateIfALoanIsReturned(self, date_format):
+        if self.fields.is_active is None:
+            return self.fields.is_active
+        else:
+            return self.fields.is_active.strftime(date_format)
 
     def create(self, validated_data):
         loan_return = return_date()
 
         loan_to_create = {
             "loan_return": loan_return,
+            "returned_at": loan_return,
             **validated_data
         }
         return Loan.objects.create(**loan_to_create)
@@ -50,6 +59,8 @@ class LoanSerializer(serializers.ModelSerializer):
             "id": instance.id,
             "loan_date": instance.loan_date.strftime(date_format),
             "loan_return": instance.loan_return.strftime(date_format),
+            "is_active": instance.is_active,
+            # "returned_at": instance.returned_at.strftime(date_format),
             "user_id": instance.user.id,
             "user_email": instance.user.email,
             "user_username": instance.user.username,
