@@ -37,8 +37,10 @@ class LoanView(generics.CreateAPIView):
         copy.is_avaliable = False
         copy.save()
 
-        user.status_for_loan = False
-        user.save()
+        user_loans_count = user.loans.count()
+        if user_loans_count == 2:
+            user.status_for_loan = False
+            user.save()
 
         serializer.save(
             user=user,
