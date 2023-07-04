@@ -41,6 +41,7 @@ THIRD_PART_APPS = [
 MY_APPS = [
     "books",
     "copies",
+    "followers",
     "loans",
     "users",
 ]
