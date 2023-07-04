@@ -45,7 +45,10 @@ class LoanView(generics.CreateAPIView):
             copy=copy
         )
 
-        status_copy = Copy.objects.filter(book_id=book_id, is_avaliable=True).first()
+        status_copy = Copy.objects.filter(
+            book_id=book_id,
+            is_avaliable=True
+        ).first()
 
         if status_copy is None:
             book.disponibility = False
@@ -65,9 +68,17 @@ class LoanCopyDetailView(generics.ListAPIView):
         user = self.request.user
         is_colaborator = user.is_colaborator
 
-        if req_method == "GET" and is_colaborator is True and copy_id is not None:
+        if (
+            req_method == "GET"
+            and is_colaborator is True
+           and copy_id is not None
+           ):
             return Loan.objects.filter(copy_id=copy_id)
-        elif req_method == "GET" and is_colaborator is False and copy_id is None:
+        elif (
+              req_method == "GET"
+              and is_colaborator is False
+              and copy_id is None
+             ):
             return Loan.objects.filter(user_id=user.id)
         elif req_method == "GET" and is_colaborator is False:
             return Loan.objects.filter(copy_id=copy_id, user_id=user.id)
