@@ -1,13 +1,13 @@
 _type: export
 __export_format: 4
-__export_date: 2023-07-04T18:40:34.633Z
+__export_date: 2023-07-04T22:03:39.652Z
 __export_source: insomnia.desktop.app:v2023.3.0
 resources:
-  - _id: req_37d92d7688de46839104194b8bce3a1d
-    parentId: fld_76512e7cc70e4cb58923b0ddac809637
-    modified: 1688481860543
+  - _id: req_1ed9a9515dc94cbc86b205f0eba23c78
+    parentId: fld_72179fcd7a89468f817f904f01398b90
+    modified: 1688507627079
     created: 1688162336428
-    url: "{{ _.base_url }}/loans/2/"
+    url: "{{ _.base_url }}/loans/1/"
     name: Create
     description: ""
     method: POST
@@ -27,8 +27,8 @@ resources:
     settingRebuildPath: true
     settingFollowRedirects: global
     _type: request
-  - _id: fld_76512e7cc70e4cb58923b0ddac809637
-    parentId: wrk_182ff846fde645db8c16e231323d1a93
+  - _id: fld_72179fcd7a89468f817f904f01398b90
+    parentId: wrk_248979e394664e7b8028b941e78ae455
     modified: 1688162335130
     created: 1688162335130
     name: Loans
@@ -37,17 +37,17 @@ resources:
     environmentPropertyOrder: null
     metaSortKey: -1688162335130
     _type: request_group
-  - _id: wrk_182ff846fde645db8c16e231323d1a93
+  - _id: wrk_248979e394664e7b8028b941e78ae455
     parentId: null
-    modified: 1688408947220
-    created: 1688408947220
+    modified: 1688496179697
+    created: 1688496179697
     name: biblioteKA
     description: ""
     scope: design
     _type: workspace
-  - _id: req_b937fb3ce99642a5a4fa358012b6b9b3
-    parentId: fld_76512e7cc70e4cb58923b0ddac809637
-    modified: 1688481664227
+  - _id: req_4c61af92d2d34147b5ae03f255915e9d
+    parentId: fld_72179fcd7a89468f817f904f01398b90
+    modified: 1688503282943
     created: 1688408040407
     url: "{{ _.base_url }}/loans/1/"
     name: Create Student 2
@@ -68,8 +68,31 @@ resources:
     settingRebuildPath: true
     settingFollowRedirects: global
     _type: request
-  - _id: req_324a8bcd631c46f2a16d3505215d86f3
-    parentId: fld_76512e7cc70e4cb58923b0ddac809637
+  - _id: req_9a8fecddf9854663835c1ae046c3c09d
+    parentId: fld_72179fcd7a89468f817f904f01398b90
+    modified: 1688507361135
+    created: 1688497850290
+    url: "{{ _.base_url }}/loans/2/"
+    name: Create Student 3
+    description: ""
+    method: POST
+    body: {}
+    parameters: []
+    headers: []
+    authentication:
+      type: bearer
+      token: "{{ _.student_token3 }}"
+    metaSortKey: -1688162090508.25
+    isPrivate: false
+    settingStoreCookies: true
+    settingSendCookies: true
+    settingDisableRenderRequestBody: false
+    settingEncodeUrl: true
+    settingRebuildPath: true
+    settingFollowRedirects: global
+    _type: request
+  - _id: req_813f75c960bc4797a29d6676558c87c1
+    parentId: fld_72179fcd7a89468f817f904f01398b90
     modified: 1688478751525
     created: 1688394258074
     url: "{{ _.base_url }}/loans/copy/1/"
@@ -91,8 +114,8 @@ resources:
     settingRebuildPath: true
     settingFollowRedirects: global
     _type: request
-  - _id: req_daca8873e0394712a961bb0dda2ade83
-    parentId: fld_76512e7cc70e4cb58923b0ddac809637
+  - _id: req_2d1532f75a844841b05b6922267a3721
+    parentId: fld_72179fcd7a89468f817f904f01398b90
     modified: 1688417972069
     created: 1688166330544
     url: "{{ _.base_url }}/loans/"
@@ -115,8 +138,8 @@ resources:
     settingRebuildPath: true
     settingFollowRedirects: global
     _type: request
-  - _id: req_2e04b28c20be4edeaacbb09d476f9c84
-    parentId: fld_76512e7cc70e4cb58923b0ddac809637
+  - _id: req_18793f4757a74c5fb4b3ff8de32bdcd0
+    parentId: fld_72179fcd7a89468f817f904f01398b90
     modified: 1688478806968
     created: 1688410519723
     url: "{{ _.base_url }}/loans/student/3/"
@@ -139,8 +162,8 @@ resources:
     settingRebuildPath: true
     settingFollowRedirects: global
     _type: request
-  - _id: req_67b6aa6d3ea848448a7472558e03808e
-    parentId: fld_76512e7cc70e4cb58923b0ddac809637
+  - _id: req_b1878fd9f48c46b38659a2680071b330
+    parentId: fld_72179fcd7a89468f817f904f01398b90
     modified: 1688417916589
     created: 1688407945726
     url: "{{ _.base_url }}/loans/"
@@ -163,8 +186,8 @@ resources:
     settingRebuildPath: true
     settingFollowRedirects: global
     _type: request
-  - _id: req_2e4550ca9108409698147474fd8990cc
-    parentId: fld_76512e7cc70e4cb58923b0ddac809637
+  - _id: req_4eadb76e03044e5c96f6112d665e5265
+    parentId: fld_72179fcd7a89468f817f904f01398b90
     modified: 1688408032987
     created: 1688408028259
     url: "{{ _.base_url }}/loans/"
@@ -187,8 +210,8 @@ resources:
     settingRebuildPath: true
     settingFollowRedirects: global
     _type: request
-  - _id: req_888ba2d680144fa790378bf3563d93bb
-    parentId: fld_30df40dc82914a10857b413682d7c0cc
+  - _id: req_020bb1baf3d543398fc97fe34a0679a0
+    parentId: fld_504b4a61cb9b455ba191a34316869faa
     modified: 1688418307908
     created: 1688161024856
     url: "{{ _.base_url }}/copies/"
@@ -211,8 +234,8 @@ resources:
     settingRebuildPath: true
     settingFollowRedirects: global
     _type: request
-  - _id: fld_30df40dc82914a10857b413682d7c0cc
-    parentId: wrk_182ff846fde645db8c16e231323d1a93
+  - _id: fld_504b4a61cb9b455ba191a34316869faa
+    parentId: wrk_248979e394664e7b8028b941e78ae455
     modified: 1688161030267
     created: 1688161030267
     name: Copies
@@ -221,9 +244,9 @@ resources:
     environmentPropertyOrder: null
     metaSortKey: -1688161030267
     _type: request_group
-  - _id: req_58de0220cac94e21bebb494992cc6b3a
-    parentId: fld_0287a2e109384c278d34ad1aaed9356b
-    modified: 1688481854478
+  - _id: req_23a6f6f6f8f8422ba6a0052be656c042
+    parentId: fld_4ebb47dc88984fd698fb80278874df6f
+    modified: 1688497242080
     created: 1688156160264
     url: "{{ _.base_url }}/books/"
     name: "Create "
@@ -233,13 +256,13 @@ resources:
       mimeType: application/json
       text: |-
         {
-        	"title": "Pequeno Principe",
+        	"title": "Codigo Limpo",
         	"author": "Fucking Author",
         	"description": "Madness about sea",
         	"page_numbers": 500,
         	"language": "english",
         	"genre": "Fiction",
-        	"copies_number": 2
+        	"copies_number": 4
         }
     parameters: []
     headers:
@@ -258,8 +281,8 @@ resources:
     settingRebuildPath: true
     settingFollowRedirects: global
     _type: request
-  - _id: fld_0287a2e109384c278d34ad1aaed9356b
-    parentId: wrk_182ff846fde645db8c16e231323d1a93
+  - _id: fld_4ebb47dc88984fd698fb80278874df6f
+    parentId: wrk_248979e394664e7b8028b941e78ae455
     modified: 1688156157992
     created: 1688156157992
     name: Books
@@ -268,8 +291,82 @@ resources:
     environmentPropertyOrder: null
     metaSortKey: -1688156157992
     _type: request_group
-  - _id: req_8f355bbbbfff4cb99dd209d4bad3b9b0
-    parentId: fld_0287a2e109384c278d34ad1aaed9356b
+  - _id: req_f0ec85bd879846bebb3b166fa0d4023e
+    parentId: fld_4ebb47dc88984fd698fb80278874df6f
+    modified: 1688497244938
+    created: 1688496737970
+    url: "{{ _.base_url }}/books/"
+    name: Create 2
+    description: ""
+    method: POST
+    body:
+      mimeType: application/json
+      text: |-
+        {
+        	"title": "SQL",
+        	"author": "Fucking Author",
+        	"description": "Madness about sea",
+        	"page_numbers": 500,
+        	"language": "english",
+        	"genre": "Fiction",
+        	"copies_number": 4
+        }
+    parameters: []
+    headers:
+      - name: Content-Type
+        value: application/json
+    authentication:
+      type: bearer
+      token: "{{ _.colaborator_token }}"
+      disabled: false
+    metaSortKey: -1688156111710.5
+    isPrivate: false
+    settingStoreCookies: true
+    settingSendCookies: true
+    settingDisableRenderRequestBody: false
+    settingEncodeUrl: true
+    settingRebuildPath: true
+    settingFollowRedirects: global
+    _type: request
+  - _id: req_0e58e2c2632d461bb49cb257c0d9bdd6
+    parentId: fld_4ebb47dc88984fd698fb80278874df6f
+    modified: 1688497867626
+    created: 1688497860441
+    url: "{{ _.base_url }}/books/"
+    name: Create 3
+    description: ""
+    method: POST
+    body:
+      mimeType: application/json
+      text: |-
+        {
+        	"title": "Node.js",
+        	"author": "Fucking Author",
+        	"description": "Madness about sea",
+        	"page_numbers": 500,
+        	"language": "english",
+        	"genre": "Fiction",
+        	"copies_number": 4
+        }
+    parameters: []
+    headers:
+      - name: Content-Type
+        value: application/json
+    authentication:
+      type: bearer
+      token: "{{ _.colaborator_token }}"
+      disabled: false
+    metaSortKey: -1688156087433.75
+    isPrivate: false
+    settingStoreCookies: true
+    settingSendCookies: true
+    settingDisableRenderRequestBody: false
+    settingEncodeUrl: true
+    settingRebuildPath: true
+    settingFollowRedirects: global
+    _type: request
+  - _id: req_0d821c67abec4a15986674cd31d1891c
+    parentId: fld_4ebb47dc88984fd698fb80278874df6f
     modified: 1688416899789
     created: 1688165129207
     url: "{{ _.base_url }}/books/"
@@ -293,8 +390,8 @@ resources:
     settingRebuildPath: true
     settingFollowRedirects: global
     _type: request
-  - _id: req_82b190e6305d48cbb24998cace862f09
-    parentId: fld_907df7bb2dcc46f49a0fd302b0d86199
+  - _id: req_6847f856ec8f403cb8d4f533c259b547
+    parentId: fld_602063b8220947279bf08a9a16dba717
     modified: 1688419527428
     created: 1688163832443
     url: "{{ _.base_url }}/users/"
@@ -326,8 +423,8 @@ resources:
     settingRebuildPath: true
     settingFollowRedirects: global
     _type: request
-  - _id: fld_907df7bb2dcc46f49a0fd302b0d86199
-    parentId: fld_971551e9972a4470be791d12d1549dcf
+  - _id: fld_602063b8220947279bf08a9a16dba717
+    parentId: fld_b2fa7786534e436cbdd8ad5e95d728eb
     modified: 1688419566235
     created: 1688419473454
     name: Create User
@@ -336,8 +433,8 @@ resources:
     environmentPropertyOrder: null
     metaSortKey: -1688291686448.5
     _type: request_group
-  - _id: fld_971551e9972a4470be791d12d1549dcf
-    parentId: wrk_182ff846fde645db8c16e231323d1a93
+  - _id: fld_b2fa7786534e436cbdd8ad5e95d728eb
+    parentId: wrk_248979e394664e7b8028b941e78ae455
     modified: 1688155974589
     created: 1688155974589
     name: Users
@@ -346,8 +443,8 @@ resources:
     environmentPropertyOrder: null
     metaSortKey: -1688155974589
     _type: request_group
-  - _id: req_0bb6b5a9633148b39cac75d3ec7342d7
-    parentId: fld_907df7bb2dcc46f49a0fd302b0d86199
+  - _id: req_38747975458d432588a7f9795f88953d
+    parentId: fld_602063b8220947279bf08a9a16dba717
     modified: 1688419531411
     created: 1688163675028
     url: "{{ _.base_url }}/users/"
@@ -378,8 +475,8 @@ resources:
     settingRebuildPath: true
     settingFollowRedirects: global
     _type: request
-  - _id: req_d8dcab930d1a401eae37abe632a64c76
-    parentId: fld_907df7bb2dcc46f49a0fd302b0d86199
+  - _id: req_a4910819f241499b9181a5b676a01b64
+    parentId: fld_602063b8220947279bf08a9a16dba717
     modified: 1688478469115
     created: 1688407977094
     url: "{{ _.base_url }}/users/"
@@ -410,8 +507,40 @@ resources:
     settingRebuildPath: true
     settingFollowRedirects: global
     _type: request
-  - _id: req_c4dc776b6f4048659934f4129ce8d2db
-    parentId: fld_6da20a99927c4d06b220e82f2fcc9809
+  - _id: req_82a9e09c11344dc9af0d66370d3991a1
+    parentId: fld_602063b8220947279bf08a9a16dba717
+    modified: 1688497815831
+    created: 1688497807373
+    url: "{{ _.base_url }}/users/"
+    name: Create Student 3
+    description: ""
+    method: POST
+    body:
+      mimeType: application/json
+      text: |-
+        {
+        	"email": "student3@mail.com",
+        	"username": "student3",
+        	"first_name": "stu3",
+        	"last_name": "dent3",
+        	"password": "1234"
+        }
+    parameters: []
+    headers:
+      - name: Content-Type
+        value: application/json
+    authentication: {}
+    metaSortKey: -1687383187048.5938
+    isPrivate: false
+    settingStoreCookies: true
+    settingSendCookies: true
+    settingDisableRenderRequestBody: false
+    settingEncodeUrl: true
+    settingRebuildPath: true
+    settingFollowRedirects: global
+    _type: request
+  - _id: req_6442a82c92524386bdde50ac976027e4
+    parentId: fld_0c045f470dcc48a38dae622ddc60d0f2
     modified: 1688163948611
     created: 1688163928278
     url: "{{ _.base_url }}/users/login"
@@ -439,8 +568,8 @@ resources:
     settingRebuildPath: true
     settingFollowRedirects: global
     _type: request
-  - _id: fld_6da20a99927c4d06b220e82f2fcc9809
-    parentId: fld_971551e9972a4470be791d12d1549dcf
+  - _id: fld_0c045f470dcc48a38dae622ddc60d0f2
+    parentId: fld_b2fa7786534e436cbdd8ad5e95d728eb
     modified: 1688163915168
     created: 1688163915168
     name: Login
@@ -449,8 +578,8 @@ resources:
     environmentPropertyOrder: null
     metaSortKey: -1688163915168
     _type: request_group
-  - _id: req_57425c394eb34bf0982033cb867f24a4
-    parentId: fld_6da20a99927c4d06b220e82f2fcc9809
+  - _id: req_cdcc72045d1e43d795e29b1833535110
+    parentId: fld_0c045f470dcc48a38dae622ddc60d0f2
     modified: 1688408014710
     created: 1688408012569
     url: "{{ _.base_url }}/users/login"
@@ -478,8 +607,37 @@ resources:
     settingRebuildPath: true
     settingFollowRedirects: global
     _type: request
-  - _id: req_1c677c639deb4c0593cb5ee9c33fc490
-    parentId: fld_6da20a99927c4d06b220e82f2fcc9809
+  - _id: req_772e46ce249e4e409a255296581adf71
+    parentId: fld_0c045f470dcc48a38dae622ddc60d0f2
+    modified: 1688497798975
+    created: 1688497796549
+    url: "{{ _.base_url }}/users/login"
+    name: Login Student 3
+    description: ""
+    method: POST
+    body:
+      mimeType: application/json
+      text: |-
+        {
+        	"username": "student3",
+        	"password": "1234"
+        }
+    parameters: []
+    headers:
+      - name: Content-Type
+        value: application/json
+    authentication: {}
+    metaSortKey: -1687943830658.4375
+    isPrivate: false
+    settingStoreCookies: true
+    settingSendCookies: true
+    settingDisableRenderRequestBody: false
+    settingEncodeUrl: true
+    settingRebuildPath: true
+    settingFollowRedirects: global
+    _type: request
+  - _id: req_d06789dd5dd242b6afdee4905c23f86d
+    parentId: fld_0c045f470dcc48a38dae622ddc60d0f2
     modified: 1688164148228
     created: 1688163922948
     url: "{{ _.base_url }}/users/login"
@@ -507,8 +665,8 @@ resources:
     settingRebuildPath: true
     settingFollowRedirects: global
     _type: request
-  - _id: req_7f05dea8ef904282b0b3bdf8993cef88
-    parentId: fld_adaa98e1b22146d7b51d80e67134c43f
+  - _id: req_43e8ecc9824c46388a3b88d76274bce2
+    parentId: fld_8a2c07f465044065afd08e3f1977e270
     modified: 1688421215810
     created: 1688159890143
     url: "{{ _.base_url }}/users/"
@@ -530,8 +688,8 @@ resources:
     settingRebuildPath: true
     settingFollowRedirects: global
     _type: request
-  - _id: fld_adaa98e1b22146d7b51d80e67134c43f
-    parentId: fld_971551e9972a4470be791d12d1549dcf
+  - _id: fld_8a2c07f465044065afd08e3f1977e270
+    parentId: fld_b2fa7786534e436cbdd8ad5e95d728eb
     modified: 1688419587270
     created: 1688419457729
     name: Colaborator
@@ -540,8 +698,8 @@ resources:
     environmentPropertyOrder: null
     metaSortKey: -1688163915118
     _type: request_group
-  - _id: req_8774c1d721ad448591150f3f2c8a6e85
-    parentId: fld_adaa98e1b22146d7b51d80e67134c43f
+  - _id: req_927de53cd1004c8b99e7d34ad01a7352
+    parentId: fld_8a2c07f465044065afd08e3f1977e270
     modified: 1688421233051
     created: 1688419648681
     url: "{{ _.base_url }}/users/1/"
@@ -563,18 +721,50 @@ resources:
     settingRebuildPath: true
     settingFollowRedirects: global
     _type: request
-  - _id: env_6235c79de18c4940a08c36ba8a463e6f
-    parentId: wrk_182ff846fde645db8c16e231323d1a93
-    modified: 1688410247747
+  - _id: req_1f7e93772c864eb39aa86ecba299db9c
+    parentId: fld_8a2c07f465044065afd08e3f1977e270
+    modified: 1688507158758
+    created: 1688500727701
+    url: "{{ _.base_url }}/users/2/"
+    name: Student Status
+    description: ""
+    method: PATCH
+    body:
+      mimeType: application/json
+      text: |-
+        {
+        	"status_for_loan": false
+        }
+    parameters: []
+    headers:
+      - name: Content-Type
+        value: application/json
+    authentication:
+      type: bearer
+      token: "{{ _.colaborator_token }}"
+    metaSortKey: -1688157092733.75
+    isPrivate: false
+    settingStoreCookies: true
+    settingSendCookies: true
+    settingDisableRenderRequestBody: false
+    settingEncodeUrl: true
+    settingRebuildPath: true
+    settingFollowRedirects: global
+    _type: request
+  - _id: env_8e70a705cccc4afabf0504e680d06fa2
+    parentId: wrk_248979e394664e7b8028b941e78ae455
+    modified: 1688497945611
     created: 1688155961721
     name: Base Environment
     data:
       base_url: http://127.0.0.1:8000/api
-      colaborator_token: "{% response 'body', 'req_1c677c639deb4c0593cb5ee9c33fc490',
+      colaborator_token: "{% response 'body', 'req_d06789dd5dd242b6afdee4905c23f86d',
         'b64::JC5hY2Nlc3M=::46b', 'never', 60 %}"
-      student_token: "{% response 'body', 'req_c4dc776b6f4048659934f4129ce8d2db',
+      student_token: "{% response 'body', 'req_6442a82c92524386bdde50ac976027e4',
         'b64::JC5hY2Nlc3M=::46b', 'never', 60 %}"
-      student_token2: "{% response 'body', 'req_57425c394eb34bf0982033cb867f24a4',
+      student_token2: "{% response 'body', 'req_cdcc72045d1e43d795e29b1833535110',
+        'b64::JC5hY2Nlc3M=::46b', 'never', 60 %}"
+      student_token3: "{% response 'body', 'req_772e46ce249e4e409a255296581adf71',
         'b64::JC5hY2Nlc3M=::46b', 'never', 60 %}"
       copy_for_loan: "{% response 'body', 'req_888ba2d680144fa790378bf3563d93bb',
         'b64::JC5yZXN1bHRzWzBdLmlk::46b', 'never', 60 %}"
@@ -584,23 +774,35 @@ resources:
         - colaborator_token
         - student_token
         - student_token2
+        - student_token3
         - copy_for_loan
     color: null
     isPrivate: false
     metaSortKey: 1688155961721
     _type: environment
-  - _id: jar_2db85168b08743228798fe367fb3ff99
-    parentId: wrk_182ff846fde645db8c16e231323d1a93
+  - _id: jar_71bf4cf35b5d4d5c9a251b539b839888
+    parentId: wrk_248979e394664e7b8028b941e78ae455
     modified: 1688155961722
     created: 1688155961722
     name: Default Jar
     cookies: []
     _type: cookie_jar
-  - _id: spc_147efe78a7994a62adbf84ce9d140ff8
-    parentId: wrk_182ff846fde645db8c16e231323d1a93
-    modified: 1688408947224
-    created: 1688408947222
+  - _id: spc_8580d7a50ad24b2bbde6947242a970c7
+    parentId: wrk_248979e394664e7b8028b941e78ae455
+    modified: 1688496179701
+    created: 1688496179700
     fileName: biblioteKA
     contents: ""
     contentType: yaml
     _type: api_spec
+  - _id: env_e3dd0762a0024ee38e257e9970115285
+    parentId: env_8e70a705cccc4afabf0504e680d06fa2
+    modified: 1688496322836
+    created: 1688496322836
+    name: New Environment
+    data: {}
+    dataPropertyOrder: null
+    color: null
+    isPrivate: false
+    metaSortKey: 1688496322837
+    _type: environment
