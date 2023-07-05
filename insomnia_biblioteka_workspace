@@ -1,7 +1,7 @@
 _type: export
 __export_format: 4
-__export_date: 2023-07-04T22:03:39.652Z
-__export_source: insomnia.desktop.app:v2023.3.0
+__export_date: 2023-07-05T14:58:14.362Z
+__export_source: insomnia.desktop.app:v2022.7.0
 resources:
   - _id: req_1ed9a9515dc94cbc86b205f0eba23c78
     parentId: fld_72179fcd7a89468f817f904f01398b90
@@ -390,6 +390,50 @@ resources:
     settingRebuildPath: true
     settingFollowRedirects: global
     _type: request
+  - _id: req_ea3c09a57b4b4f0cbf312b2e88a5d3cc
+    parentId: fld_ba701588c0624b918df4a0b010f6d31d
+    modified: 1688569025578
+    created: 1688567159587
+    url: "{{ _.base_url }}/follow/2/"
+    name: "Create "
+    description: ""
+    method: POST
+    body: {}
+    parameters: []
+    headers: []
+    authentication:
+      type: bearer
+      token: "{{ _.student_token }}"
+      disabled: false
+    metaSortKey: -1688567159587
+    isPrivate: false
+    settingStoreCookies: true
+    settingSendCookies: true
+    settingDisableRenderRequestBody: false
+    settingEncodeUrl: true
+    settingRebuildPath: true
+    settingFollowRedirects: global
+    _type: request
+  - _id: fld_ba701588c0624b918df4a0b010f6d31d
+    parentId: fld_b2fa7786534e436cbdd8ad5e95d728eb
+    modified: 1688567152168
+    created: 1688567152168
+    name: Follow
+    description: ""
+    environment: {}
+    environmentPropertyOrder: null
+    metaSortKey: -1688567152168
+    _type: request_group
+  - _id: fld_b2fa7786534e436cbdd8ad5e95d728eb
+    parentId: wrk_248979e394664e7b8028b941e78ae455
+    modified: 1688155974589
+    created: 1688155974589
+    name: Users
+    description: ""
+    environment: {}
+    environmentPropertyOrder: null
+    metaSortKey: -1688155974589
+    _type: request_group
   - _id: req_6847f856ec8f403cb8d4f533c259b547
     parentId: fld_602063b8220947279bf08a9a16dba717
     modified: 1688419527428
@@ -432,16 +476,6 @@ resources:
     environment: {}
     environmentPropertyOrder: null
     metaSortKey: -1688291686448.5
-    _type: request_group
-  - _id: fld_b2fa7786534e436cbdd8ad5e95d728eb
-    parentId: wrk_248979e394664e7b8028b941e78ae455
-    modified: 1688155974589
-    created: 1688155974589
-    name: Users
-    description: ""
-    environment: {}
-    environmentPropertyOrder: null
-    metaSortKey: -1688155974589
     _type: request_group
   - _id: req_38747975458d432588a7f9795f88953d
     parentId: fld_602063b8220947279bf08a9a16dba717
@@ -751,7 +785,36 @@ resources:
     settingRebuildPath: true
     settingFollowRedirects: global
     _type: request
-  - _id: env_8e70a705cccc4afabf0504e680d06fa2
+  - _id: env_750418f1e6917f659b5e94c02d171db6b9126878
+    parentId: wrk_248979e394664e7b8028b941e78ae455
+    modified: 1688497945611
+    created: 1688155961721
+    name: Base Environment
+    data:
+      base_url: http://127.0.0.1:8000/api
+      colaborator_token: "{% response 'body', 'req_d06789dd5dd242b6afdee4905c23f86d',
+        'b64::JC5hY2Nlc3M=::46b', 'never', 60 %}"
+      student_token: "{% response 'body', 'req_6442a82c92524386bdde50ac976027e4',
+        'b64::JC5hY2Nlc3M=::46b', 'never', 60 %}"
+      student_token2: "{% response 'body', 'req_cdcc72045d1e43d795e29b1833535110',
+        'b64::JC5hY2Nlc3M=::46b', 'never', 60 %}"
+      student_token3: "{% response 'body', 'req_772e46ce249e4e409a255296581adf71',
+        'b64::JC5hY2Nlc3M=::46b', 'never', 60 %}"
+      copy_for_loan: "{% response 'body', 'req_888ba2d680144fa790378bf3563d93bb',
+        'b64::JC5yZXN1bHRzWzBdLmlk::46b', 'never', 60 %}"
+    dataPropertyOrder:
+      "&":
+        - base_url
+        - colaborator_token
+        - student_token
+        - student_token2
+        - student_token3
+        - copy_for_loan
+    color: null
+    isPrivate: false
+    metaSortKey: 1688155961721
+    _type: environment
+  - _id: env_f63670b6c712e00f1f55b302a66835a3ea5a0233
     parentId: wrk_248979e394664e7b8028b941e78ae455
     modified: 1688497945611
     created: 1688155961721
@@ -796,12 +859,12 @@ resources:
     contentType: yaml
     _type: api_spec
   - _id: env_e3dd0762a0024ee38e257e9970115285
-    parentId: env_8e70a705cccc4afabf0504e680d06fa2
-    modified: 1688496322836
+    parentId: env_f63670b6c712e00f1f55b302a66835a3ea5a0233
+    modified: 1688567417645
     created: 1688496322836
     name: New Environment
     data: {}
-    dataPropertyOrder: null
+    dataPropertyOrder: {}
     color: null
     isPrivate: false
     metaSortKey: 1688496322837
