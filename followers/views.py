@@ -5,30 +5,27 @@ from django.shortcuts import get_object_or_404
 
 from .models import Follower
 from .serializers import FollowerSerializer
+from .exceptions import BookAlreadyFollowed
 from books.models import Book
+from users.permissions import IsStudent
 
 
-class FollowerListCreateView(ListCreateAPIView):
+class FollowerView(ListCreateAPIView):
     authentication_classes = [JWTAuthentication]
-    permission_classes = [IsAuthenticated]
+    permission_classes = [IsStudent]
     queryset = Follower.objects.all()
     serializer_class = FollowerSerializer
-
-    def post(self, request, *args, **kwargs):
-        book = get_object_or_404(Book, pk=self.kwargs.get("pk"))
-        user = self.request.user
-        try:
-            user_following = Follower.objects.get(pk=user.id)
-            if (
-                user_following.user_id == user.id
-                and user_following.book_id == book.id
-                 ):
-                raise ValueError("Você já está seguindo este livro.")
-        except Follower.DoesNotExist:
-            pass
-        return super().post(request, *args, **kwargs)
+    lookup_url_kwarg = "book_id"
 
     def perform_create(self, serializer):
-        book = get_object_or_404(Book, pk=self.kwargs.get("pk"))
+        book = get_object_or_404(Book, pk=self.kwargs.get("book_id"))
         user = self.request.user
-        serializer.save(user=user, book=book)
+        
+        user_following = Follower.objects.filter(student_id=user.id, book_followed=book).first()
+        print(user_following)
+        if user_following is not None:
+            message = "You already follow this book"
+            raise BookAlreadyFollowed(message)
+
+        serializer.save(student=user, book_followed=book)
+

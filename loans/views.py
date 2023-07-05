@@ -4,7 +4,7 @@ from django.shortcuts import get_object_or_404
 
 from .models import Loan
 from .serializers import LoanSerializer
-from .exepctions import LoanIsNotStatusAvaliable
+from .exceptions import LoanIsNotStatusAvaliable
 from copies.models import Copy
 from books.models import Book
 from users.models import User
