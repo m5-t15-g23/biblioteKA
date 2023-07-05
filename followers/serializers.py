@@ -3,13 +3,13 @@ from .models import Follower
 
 class FollowerSerializer(serializers.ModelSerializer):
     class Meta:
-        model = Follower
-        fields = [
+       model = Follower
+       fields = [
             "id",
-            "user_id",
-            "book_id",
+            "student",
+            "book_followed",
         ]
-        read_only_fields = [
-            "user_id",
-            "book_id",
+       read_only_fields = [
+            "student",
+            "book_followed",
         ]
