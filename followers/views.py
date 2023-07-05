@@ -20,12 +20,14 @@ class FollowerView(ListCreateAPIView):
     def perform_create(self, serializer):
         book = get_object_or_404(Book, pk=self.kwargs.get("book_id"))
         user = self.request.user
-        
-        user_following = Follower.objects.filter(student_id=user.id, book_followed=book).first()
+
+        user_following = Follower.objects.filter(
+            student_id=user.id,
+            book_followed=book
+        ).first()
         print(user_following)
         if user_following is not None:
             message = "You already follow this book"
             raise BookAlreadyFollowed(message)
 
         serializer.save(student=user, book_followed=book)
-

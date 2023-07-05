@@ -1,5 +1,6 @@
 from django.db import models
 
+
 class Follower(models.Model):
     student = models.ForeignKey(
         "users.User",

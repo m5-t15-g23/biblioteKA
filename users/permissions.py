@@ -27,5 +27,6 @@ class IsAuthenticatedOrCreate(permissions.BasePermission):
 
 
 class IsStudent(permissions.BasePermission):
-    def has_permission(self, request, view:View):
-        return request.user.is_authenticated and request.user.is_colaborator is False 
+    def has_permission(self, request, view: View):
+        return (request.user.is_authenticated and
+                request.user.is_colaborator is False)
