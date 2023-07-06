@@ -10,6 +10,7 @@ from copies.models import Copy
 from books.models import Book
 from users.models import User
 from users.permissions import IsAuthenticated, IsColaborator
+from users.exceptions import LoanNotOwner
 
 
 class LoanView(generics.CreateAPIView):
@@ -38,7 +39,7 @@ class LoanView(generics.CreateAPIView):
         copy.is_avaliable = False
         copy.save()
 
-        user_loans_count = user.loans.count()
+        user_loans_count = user.loans.filter(is_active=True).count()
         if user_loans_count == 2:
             user.status_for_loan = False
             user.save()
@@ -110,19 +111,22 @@ class LoanCheckoutView(views.APIView):
     def patch(self, request: views.Request, loan_id) -> views.Response:
         loan = get_object_or_404(Loan, id=loan_id)
 
+        user_token = request.user
+        user = loan.user
         copy = loan.copy
+        book = copy.book
+
+        if user.id != user_token.id:
+            message = "You don`t own this loan."
+            raise LoanNotOwner(message)
 
         copy.is_avaliable = True
         copy.save()
 
-        book = copy.book
         book_disp = book.disponibility
-
         if book_disp is False:
             book.disponibility = True
             book.save()
-
-        user = loan.user
 
         if user.loans.count() > 1:
             others_loans = user.loans.all()
@@ -136,6 +140,9 @@ class LoanCheckoutView(views.APIView):
                         user.status_for_loan = False
                         user.save()
                         return
+
+                user.status_for_loan = True
+                user.save()
 
         loan.is_active = False
         loan.returned_at = dt.now().date()

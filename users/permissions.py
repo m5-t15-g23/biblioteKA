@@ -1,6 +1,8 @@
 from rest_framework import permissions
 from rest_framework.views import View
 
+from loans.models import Loan
+
 
 class IsAuthenticated(permissions.BasePermission):
     def has_permission(self, request, view: View):
@@ -30,3 +32,11 @@ class IsStudent(permissions.BasePermission):
     def has_permission(self, request, view: View):
         return (request.user.is_authenticated and
                 request.user.is_colaborator is False)
+
+
+# class LoanOwner(permissions.BasePermission):
+#     def has_object_permission(self, request, view: View, obj: Loan):
+#         import ipdb
+#         ipdb.set_trace()
+#         return (request.user.is_authenticated and
+#                 request.user.id == obj.user.id)
