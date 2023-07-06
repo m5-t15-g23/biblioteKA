@@ -28,6 +28,27 @@ class UserSerializer(serializers.ModelSerializer):
         user.save()
         return user
 
+    def to_representation(self, instance):
+        if instance.is_colaborator is True:
+            return {
+                "id": instance.id,
+                "email": instance.email,
+                "username": instance.username,
+                "first_name": instance.first_name,
+                "last_name": instance.last_name,
+                "is_colaborator": instance.is_colaborator,
+            }
+        else:
+            return {
+                "id": instance.id,
+                "email": instance.email,
+                "username": instance.username,
+                "first_name": instance.first_name,
+                "last_name": instance.last_name,
+                "is_colaborator": instance.is_colaborator,
+                "status_for_loan": instance.status_for_loan,
+            }
+
     class Meta:
         model = User
         fields = [
@@ -62,6 +83,14 @@ class UserSerializer(serializers.ModelSerializer):
 
 
 class StudentStatusSerializer(serializers.ModelSerializer):
+    def to_representation(self, instance):
+        return {
+            "id": instance.id,
+            "email": instance.email,
+            "username": instance.username,
+            "status_for_loan": instance.status_for_loan
+        }
+
     class Meta:
         model = User
         fields = [
@@ -75,11 +104,3 @@ class StudentStatusSerializer(serializers.ModelSerializer):
             "status_for_loan"
         ]
         read_only_fields = ["status_for_loan"]
-
-    def to_representation(self, instance):
-        return {
-            "id": instance.id,
-            "email": instance.email,
-            "username": instance.username,
-            "status_for_loan": instance.status_for_loan
-        }
