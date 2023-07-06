@@ -3,11 +3,15 @@ from django.conf import settings
 
 
 def send_mail_on_change(book_title, availability, recipient_list):
-    subject = f'Yay! The book "{book_title}" is {availability}'
-    message = f'The availability of the book "{book_title}" is {availability}'
+    status_for_book = "avaliable" if availability is True else "unavaliable"
+    interaction = ":)" if availability is True else ":("
+
+    subject = (f"We have news! The book {book_title} is "
+               f"{status_for_book} {interaction}")
+    message = (f"The availability of the book "
+               f"{book_title} is {status_for_book}")
     from_email = settings.EMAIL_HOST_USER
-    # import ipdb
-    # ipdb.set_trace()
+
     send_mail(
         subject=subject,
         message=message,

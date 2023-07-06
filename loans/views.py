@@ -12,6 +12,7 @@ from users.models import User
 from users.permissions import IsAuthenticated, IsColaborator
 from users.exceptions import LoanNotOwner
 from followers.utils import send_mail_on_change
+from followers.models import Follower
 
 
 class LoanView(generics.CreateAPIView):
@@ -58,6 +59,16 @@ class LoanView(generics.CreateAPIView):
         if status_copy is None:
             book.disponibility = False
             book.save()
+            followers = Follower.objects.filter(book_followed=book)
+            students_email = [
+                follower.student.email for follower in followers
+            ]
+
+            send_mail_on_change(
+                book.title,
+                book.disponibility,
+                students_email
+            )
 
 
 class LoanCopyDetailView(generics.ListAPIView):
@@ -123,17 +134,18 @@ class LoanCheckoutView(views.APIView):
         copy.is_avaliable = True
         copy.save()
 
-        book_disp = book.disponibility
-        if book_disp is False:
+        if book.disponibility is False:
             book.disponibility = True
             book.save()
+            followers = Follower.objects.filter(book_followed=book)
+            students_email = [
+                follower.student.email for follower in followers
+            ]
+
             send_mail_on_change(
                 book.title,
-                True,
-                [
-                    "brunopavanellicontato@gmail.com",
-                    "dudadnapolitano@gmail.com"
-                ]
+                book.disponibility,
+                students_email
             )
 
         if user.loans.count() > 1:
