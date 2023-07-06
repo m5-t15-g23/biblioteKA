@@ -11,6 +11,7 @@ from books.models import Book
 from users.models import User
 from users.permissions import IsAuthenticated, IsColaborator
 from users.exceptions import LoanNotOwner
+from followers.utils import send_mail_on_change
 
 
 class LoanView(generics.CreateAPIView):
@@ -106,7 +107,6 @@ class LoanColaboratorDetailView(generics.ListAPIView):
 
 class LoanCheckoutView(views.APIView):
     authentication_classes = [JWTAuthentication]
-    # permission_classes = [IsColaborator]
 
     def patch(self, request: views.Request, loan_id) -> views.Response:
         loan = get_object_or_404(Loan, id=loan_id)
@@ -127,6 +127,14 @@ class LoanCheckoutView(views.APIView):
         if book_disp is False:
             book.disponibility = True
             book.save()
+            send_mail_on_change(
+                book.title,
+                True,
+                [
+                    "brunopavanellicontato@gmail.com",
+                    "dudadnapolitano@gmail.com"
+                ]
+            )
 
         if user.loans.count() > 1:
             others_loans = user.loans.all()
