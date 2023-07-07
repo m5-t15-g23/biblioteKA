@@ -123,6 +123,10 @@ class LoanCheckoutView(APIView):
     def patch(self, request: Request, loan_id) -> Response:
         loan = get_object_or_404(Loan, id=loan_id)
 
+        if loan.is_active is False:
+            message = "This loan has alredy been delivered"
+            raise LoanIsNotStatusAvaliable(message)
+
         user = loan.user
         copy = loan.copy
         book = copy.book
