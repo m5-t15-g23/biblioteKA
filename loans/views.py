@@ -10,8 +10,7 @@ from .exceptions import LoanIsNotStatusAvaliable
 from copies.models import Copy
 from books.models import Book
 from users.models import User
-from users.permissions import IsAuthenticated, IsColaborator
-from users.exceptions import LoanNotOwner
+from users.permissions import IsAuthenticated, IsColaborator, LoanOwner
 from followers.utils import send_mail_on_change
 from followers.models import Follower
 
@@ -119,18 +118,16 @@ class LoanColaboratorDetailView(generics.ListAPIView):
 
 class LoanCheckoutView(APIView):
     authentication_classes = [JWTAuthentication]
+    permission_classes = [LoanOwner]
 
     def patch(self, request: Request, loan_id) -> Response:
         loan = get_object_or_404(Loan, id=loan_id)
 
-        user_token = request.user
         user = loan.user
         copy = loan.copy
         book = copy.book
 
-        if user.id != user_token.id:
-            message = "You don`t own this loan."
-            raise LoanNotOwner(message)
+        self.check_object_permissions(request, loan)
 
         copy.is_avaliable = True
         copy.save()
