@@ -2,7 +2,6 @@ from rest_framework import generics
 from rest_framework_simplejwt.authentication import JWTAuthentication
 from users.permissions import IsColaboratorOrReadOnly
 
-
 from .models import Book
 from .serializers import BookSerializer
 

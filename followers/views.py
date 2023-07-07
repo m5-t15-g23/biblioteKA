@@ -5,7 +5,7 @@ from django.shortcuts import get_object_or_404
 
 from .models import Follower
 from .serializers import FollowerSerializer
-from .exceptions import FollowExceptions, FollowTableEmpty
+from .exceptions import FollowExceptions
 from books.models import Book
 from users.permissions import IsStudent, IsColaborator
 
@@ -34,7 +34,7 @@ class FollowerView(generics.ListCreateAPIView):
             student_id=user.id,
             book_followed=book
         ).first()
-        print(user_following)
+
         if user_following is not None:
             message = "You already follow this book"
             raise FollowExceptions(message)
@@ -64,7 +64,7 @@ class FollowerDestroyView(APIView):
         ).first()
 
         if following_student_book is None:
-            message = "Student doesnt follow this book"
+            message = "Student doesn't follow this book"
             raise FollowExceptions(message)
 
         following_student_book.delete()

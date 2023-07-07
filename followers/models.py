@@ -12,3 +12,6 @@ class Follower(models.Model):
         related_name="book_followers",
         on_delete=models.CASCADE
     )
+
+    class Meta:
+        ordering = ["id"]

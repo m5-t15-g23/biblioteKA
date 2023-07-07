@@ -11,3 +11,6 @@ class User(AbstractUser):
 
     def __str__(self) -> str:
         return f"<User [{self.id}] -> {self.first_name}>"
+
+    class Meta:
+        ordering = ["id"]

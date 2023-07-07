@@ -1,26 +1,22 @@
 from django.db import models
-from datetime import datetime
-from django.utils import timezone
+from datetime import datetime as dt
 
 
 class Language(models.TextChoices):
-    ENGLISH = 'english'
-    PORTUGUESE = 'portuguese'
-    SPANISH = 'spenish'
-    FRENCH = 'french'
-    ITALIAN = 'italian'
-    GERMAN = 'german'
-    NOTINFORMED = 'not informed'
+    ENGLISH = "English"
+    PORTUGUESE = "Portuguese"
+    SPANISH = "Spanish"
+    FRENCH = "French"
+    ITALIAN = "Italian"
+    GERMAN = "German"
+    NOTINFORMED = "Not Informed"
 
 
 class Book(models.Model):
-    class Meta:
-        ordering = ["id"]
-
     title = models.CharField(max_length=255)
     author = models.CharField(max_length=255)
     description = models.TextField()
-    publication_year = models.DateTimeField(null=True, default=timezone.now())
+    publication_year = models.DateTimeField(null=True, default=dt.now())
     page_numbers = models.IntegerField()
     language = models.CharField(
         max_length=50,
@@ -35,3 +31,6 @@ class Book(models.Model):
         "users.User",
         related_name="books",
     )
+
+    class Meta:
+        ordering = ["id"]

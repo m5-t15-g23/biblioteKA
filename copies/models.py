@@ -9,3 +9,6 @@ class Copy(models.Model):
         on_delete=models.PROTECT,
         related_name="copies"
     )
+
+    class Meta:
+        ordering = ["id"]

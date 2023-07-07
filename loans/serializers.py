@@ -1,6 +1,5 @@
 from rest_framework import serializers
-from datetime import timedelta
-from datetime import datetime as dt
+from datetime import datetime as dt, timedelta
 
 from copies.serializers import CopySerializer
 from loans.models import Loan
@@ -26,19 +25,6 @@ class LoanSerializer(serializers.ModelSerializer):
     user = UserSerializer(read_only=True)
     copy = CopySerializer(read_only=True)
 
-    class Meta:
-        model = Loan
-        fields = [
-            "id",
-            "loan_date",
-            "loan_return",
-            "is_active",
-            "returned_at",
-            "user",
-            "copy"
-        ]
-        read_only_fields = ["id", "user", "copy", "loan_return"]
-
     def validateIfALoanIsReturned(self, date_format):
         if self.fields.is_active is None:
             return self.fields.is_active
@@ -56,7 +42,7 @@ class LoanSerializer(serializers.ModelSerializer):
         return Loan.objects.create(**loan_to_create)
 
     def to_representation(self, instance):
-        date_format = "%d/%m/%Y"
+        # date_format = "%d/%m/%Y"
         return {
             "id": instance.id,
             "loan_date": instance.loan_date,
@@ -69,3 +55,16 @@ class LoanSerializer(serializers.ModelSerializer):
             "copy_id": instance.copy.id,
             "copy_title": instance.copy.book.title
         }
+
+    class Meta:
+        model = Loan
+        fields = [
+            "id",
+            "loan_date",
+            "loan_return",
+            "is_active",
+            "returned_at",
+            "user",
+            "copy"
+        ]
+        read_only_fields = ["id", "user", "copy", "loan_return"]

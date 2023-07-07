@@ -1,4 +1,5 @@
-from rest_framework import generics, views
+from rest_framework import generics
+from rest_framework.views import APIView, Request, Response
 from rest_framework_simplejwt.authentication import JWTAuthentication
 from django.shortcuts import get_object_or_404
 from datetime import datetime as dt
@@ -104,9 +105,9 @@ class LoanCopyDetailView(generics.ListAPIView):
 
 class LoanColaboratorDetailView(generics.ListAPIView):
     authentication_classes = [JWTAuthentication]
-    serializer_class = LoanSerializer
     permission_classes = [IsColaborator]
 
+    serializer_class = LoanSerializer
     lookup_url_kwarg = "student_id"
 
     def get_queryset(self):
@@ -116,10 +117,10 @@ class LoanColaboratorDetailView(generics.ListAPIView):
         return Loan.objects.filter(user=student)
 
 
-class LoanCheckoutView(views.APIView):
+class LoanCheckoutView(APIView):
     authentication_classes = [JWTAuthentication]
 
-    def patch(self, request: views.Request, loan_id) -> views.Response:
+    def patch(self, request: Request, loan_id) -> Response:
         loan = get_object_or_404(Loan, id=loan_id)
 
         user_token = request.user
@@ -170,4 +171,4 @@ class LoanCheckoutView(views.APIView):
 
         loan_serialized = LoanSerializer(instance=loan).data
 
-        return views.Response(loan_serialized)
+        return Response(loan_serialized)
