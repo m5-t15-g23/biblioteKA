@@ -8,14 +8,13 @@ from users.serializers import UserSerializer
 
 def return_date():
     date_format = "%d/%m/%Y"
-    loan_date_return = dt.now() + timedelta(days=1)
+    loan_date_return = dt.now() + timedelta(days=30)
     week_day = loan_date_return.weekday()
 
-    match week_day:
-        case 5:
-            loan_date_return = loan_date_return + timedelta(days=2)
-        case 6:
-            loan_date_return = loan_date_return + timedelta(days=1)
+    if week_day == 5:
+        loan_date_return = loan_date_return + timedelta(days=2)
+    elif week_day == 6:
+        loan_date_return = loan_date_return + timedelta(days=1)
 
     loan_date_return_str = loan_date_return.strftime(date_format)
     loan_date_return = dt.strptime(loan_date_return_str, date_format).date()
