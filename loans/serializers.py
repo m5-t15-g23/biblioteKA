@@ -18,7 +18,9 @@ def return_date():
             loan_date_return = loan_date_return + timedelta(days=1)
 
     loan_date_return_str = loan_date_return.strftime(date_format)
-    return dt.strptime(loan_date_return_str, date_format).date()
+    loan_date_return = dt.strptime(loan_date_return_str, date_format).date()
+
+    return loan_date_return
 
 
 class LoanSerializer(serializers.ModelSerializer):
@@ -36,19 +38,20 @@ class LoanSerializer(serializers.ModelSerializer):
 
         loan_to_create = {
             "loan_return": loan_return,
-            "returned_at": loan_return,
+            "returned_at": None,
             **validated_data
         }
         return Loan.objects.create(**loan_to_create)
 
     def to_representation(self, instance):
-        # date_format = "%d/%m/%Y"
         return {
             "id": instance.id,
             "loan_date": instance.loan_date,
             "loan_return": instance.loan_return,
             "is_active": instance.is_active,
-            # "returned_at": instance.returned_at.strftime(date_format),
+            "returned_at": (instance.returned_at
+                            if instance.returned_at is not None
+                            else None),
             "user_id": instance.user.id,
             "user_email": instance.user.email,
             "user_username": instance.user.username,
