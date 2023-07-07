@@ -41,7 +41,8 @@ if RAILWAY_STATIC_URL:
 
 # Application definition
 THIRD_PART_APPS = [
-    "rest_framework"
+    "rest_framework",
+    "drf_spectacular",
 ]
 
 MY_APPS = [
@@ -148,6 +149,7 @@ AUTH_PASSWORD_VALIDATORS = [
 REST_FRAMEWORK = {
     "DEFAULT_PAGINATION_CLASS": "rest_framework.pagination.PageNumberPagination",
     "PAGE_SIZE": 10,
+    "DEFAULT_SCHEMA_CLASS": "drf_spectacular.openapi.AutoSchema",
 }
 SIMPLE_JWT = {
     "ACCESS_TOKEN_LIFETIME": timedelta(hours=15),
@@ -184,3 +186,11 @@ EMAIL_HOST = os.getenv("EMAIL_HOST")
 EMAIL_PORT = os.getenv("EMAIL_PORT")
 EMAIL_HOST_USER = os.getenv("EMAIL_HOST_USER")
 EMAIL_HOST_PASSWORD = os.getenv("EMAIL_HOST_PASSWORD")
+
+
+SPECTACULAR_SETTINGS = {
+    "TITLE": "biblioteKa",
+    "DESCRIPTION": "A library API",
+    "VERSION": "1.0.0",
+    "SERVE_INCLUDE_SCHEMA": False,
+}
