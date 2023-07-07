@@ -18,7 +18,7 @@ executing==1.2.0
 Faker==18.13.0
 iniconfig==2.0.0
 ipdb==0.13.13
-ipython==8.14.0
+ipython==8.13.0
 jedi==0.18.2
 kombu==5.3.1
 matplotlib-inline==0.1.6
