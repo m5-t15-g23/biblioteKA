@@ -32,9 +32,13 @@ class UserDetailView(generics.RetrieveUpdateAPIView):
 
     lookup_url_kwarg = "student_id"
 
-    def get_queryset(self):
+    def get_queryset(self):        
         student_id = self.kwargs.get("student_id")
-        get_object_or_404(User, pk=student_id)
+        user = get_object_or_404(User, pk=student_id)
+
+        if user.is_colaborator is True:
+            message = "This user is a colaborator."
+            raise StudentLoanException(message)
 
         return User.objects.filter(id=student_id)
 
