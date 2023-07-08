@@ -12,7 +12,7 @@ class BookModelTest(TestCase):
         expected = 255
 
         message_title = (f"Verify if title field has property "
-                         "max_length as {expected}")
+                         f"max_length as {expected}")
 
         self.assertEqual(expected, result_title, message_title)
 
@@ -22,7 +22,7 @@ class BookModelTest(TestCase):
         expected = 255
 
         message = (f"Verify if author field has property "
-                   "max_length as {expected}")
+                   f"max_length as {expected}")
 
         self.assertEqual(expected, result, message)
 
@@ -44,7 +44,7 @@ class BookModelTest(TestCase):
 
         message_null = "Verify if publication_yean null property is True"
         message_default = (f"Verify if publication_yean default property"
-                           " is {expected}")
+                           f" is {expected}")
 
         self.assertTrue(result_null, message_null)
         self.assertEqual(expected, result_default, message_default)
@@ -65,20 +65,20 @@ class BookModelTest(TestCase):
         result_default = Book._meta.get_field("language").default
 
         expected_choices = [
-            "english",
-            "portuguese",
-            "spenish",
-            "french",
-            "italian",
-            "german",
-            "not informed"
+            "English",
+            "Portuguese",
+            "Spanish",
+            "French",
+            "Italian",
+            "German",
+            "Not Informed"
         ]
-        expected_default = "not informed"
+        expected_default = "Not Informed"
 
         message_choices = (f"Verify if language field choices"
-                           " property is {expected_choices}")
+                           f" property is {expected_choices}")
         message_default = (f"Verify if language field default"
-                           " property is {expected_default}")
+                           f" property is {expected_default}")
 
         for choice in expected_choices:
             self.assertIn(choice, result_choices, message_choices)
@@ -90,7 +90,7 @@ class BookModelTest(TestCase):
         expected = 255
 
         message = (f"Verify if genre field has property "
-                   "max_length as {expected}")
+                   f"max_length as {expected}")
 
         self.assertEqual(expected, result, message)
 
