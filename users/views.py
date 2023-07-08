@@ -32,7 +32,7 @@ class UserDetailView(generics.RetrieveUpdateAPIView):
 
     lookup_url_kwarg = "student_id"
 
-    def get_queryset(self):        
+    def get_queryset(self):
         student_id = self.kwargs.get("student_id")
         user = get_object_or_404(User, pk=student_id)
 
