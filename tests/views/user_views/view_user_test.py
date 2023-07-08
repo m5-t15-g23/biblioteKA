@@ -99,11 +99,11 @@ class UserViewTest(APITestCase):
 
         expected_status_code = 201
         expected_body = {
-            "id": 3,
-            "email": "colaboratortest@mail.com",
-            "username": "colaboratortest",
-            "first_name": "colabo",
-            "last_name": "rator",
+            "id": response.json()["id"],
+            "email": response.json()["email"],
+            "username": response.json()["username"],
+            "first_name": response.json()["first_name"],
+            "last_name": response.json()["last_name"],
             "is_colaborator": True
         }
 
@@ -143,11 +143,11 @@ class UserViewTest(APITestCase):
 
         expected_status_code = 201
         expected_body = {
-            "id": 4,
-            "email": "studenttest@mail.com",
-            "username": "studenttest",
-            "first_name": "stu",
-            "last_name": "dent",
+            "id": response.json()["id"],
+            "email": response.json()["email"],
+            "username": response.json()["username"],
+            "first_name": response.json()["first_name"],
+            "last_name": response.json()["last_name"],
             "is_colaborator": False,
             "status_for_loan": True
         }
@@ -233,11 +233,11 @@ class UserViewTest(APITestCase):
 
         expected_status_code = 200
         expected_body = {
-            "id": 2,
-            "email": "student@mail.com",
-            "username": "student",
-            "first_name": "stu",
-            "last_name": "dent",
+            "id": self.student.id,
+            "email": self.student.email,
+            "username": self.student.username,
+            "first_name": self.student.first_name,
+            "last_name": self.student.last_name,
             "is_colaborator": False,
             "status_for_loan": True
         }

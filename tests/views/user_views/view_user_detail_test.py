@@ -101,9 +101,9 @@ class UserDetailViewTest(APITestCase):
 
         expected_status_code = 200
         expected_body = {
-            "id": 2,
-            "email": "student@mail.com",
-            "username": "student",
+            "id": self.student.id,
+            "email": self.student.email,
+            "username": self.student.username,
             "status_for_loan": True
         }
 
@@ -249,11 +249,11 @@ class UserDetailViewTest(APITestCase):
 
         expected_status_code = 200
         expected_body = {
-            "id": 2,
-            "email": "student@mail.com",
-            "username": "student",
-            "first_name": "stu",
-            "last_name": "dent",
+            "id": self.student.id,
+            "email": self.student.email,
+            "username": self.student.username,
+            "first_name": self.student.first_name,
+            "last_name": self.student.last_name,
             "is_colaborator": False,
             "status_for_loan": False
         }
