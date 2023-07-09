@@ -33,17 +33,6 @@ class BookView(APITestCase):
             book_data.book_data["sql"]
         )
 
-        # (cls.copy_clean_code_one,
-        #  cls.copy_clean_code_two,
-        #  cls.copy_clean_code_three) = (
-        #     copy_factories.create_copies(cls.book)
-        # )
-        # (cls.copy_sql_one,
-        #  cls.copy_sql_two,
-        #  cls.copy_sql_three) = (
-        #     copy_factories.create_copies(cls.book)
-        # )
-
     def test_if_a_non_logged_user_cant_create_a_book(self):
         data = book_data.book_data["clean_code"]
 
