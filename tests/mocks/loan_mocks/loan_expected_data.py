@@ -1,0 +1,13 @@
+def dinamic_response(loan_data, student_data, copy_id, book_title, id):
+    return {
+        "id": id,
+        "loan_date": loan_data["loan_date"],
+        "loan_return": loan_data["loan_return"],
+        "is_active": loan_data["is_active"],
+        "returned_at": loan_data["returned_at"],
+        "user_id": student_data.id,
+        "user_email": student_data.email,
+        "user_username": student_data.username,
+        "copy_id": copy_id,
+        "book_title": book_title
+    }

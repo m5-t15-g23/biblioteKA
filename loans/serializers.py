@@ -55,7 +55,7 @@ class LoanSerializer(serializers.ModelSerializer):
             "user_email": instance.user.email,
             "user_username": instance.user.username,
             "copy_id": instance.copy.id,
-            "copy_title": instance.copy.book.title
+            "book_title": instance.copy.book.title
         }
 
     class Meta:
