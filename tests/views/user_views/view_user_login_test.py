@@ -1,7 +1,7 @@
 from rest_framework.test import APITestCase
 
 from tests.factories import user_factories
-from tests.mocks.user_mocks import user_data, message_data, expected_data
+from tests.mocks.user_mocks import user_data, user_expected_data, user_message_data
 
 
 class UserLoginViewTest(APITestCase):
@@ -26,14 +26,14 @@ class UserLoginViewTest(APITestCase):
         response = self.client.post(path=self.BASE_URL)
 
         expected_status_code = 400
-        expected_body = expected_data.expected_data[
+        expected_body = user_expected_data.expected_data[
             "username_password_fileds_required"
         ]
 
         response_status_code = response.status_code
         response_body = response.json()
 
-        message_status_code = message_data.message_status_code(
+        message_status_code = user_message_data.message_status_code(
             expected_status_code
         )
         message_body = ("Verify if returned body for empty"
@@ -59,14 +59,14 @@ class UserLoginViewTest(APITestCase):
         response = self.client.post(path=self.BASE_URL, data=data)
 
         expected_status_code = 401
-        expected_body = expected_data.expected_data[
+        expected_body = user_expected_data.expected_data[
             "no_active_account_found"
         ]
 
         response_status_code = response.status_code
         response_body = response.json()
 
-        message_status_code = message_data.message_status_code(
+        message_status_code = user_message_data.message_status_code(
             expected_status_code
         )
         message_body = ("Verify if returned body for invalid"
@@ -97,7 +97,7 @@ class UserLoginViewTest(APITestCase):
         response_status_code = response.status_code
         response_keys = set(response.json().keys())
 
-        message_status_code = message_data.message_status_code(
+        message_status_code = user_message_data.message_status_code(
             expected_status_code
         )
         message_body = ("Verify if returned body for valid"

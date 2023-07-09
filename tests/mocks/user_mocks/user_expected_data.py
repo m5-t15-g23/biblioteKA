@@ -55,6 +55,9 @@ expected_data = {
             "This field is required."
         ]
     },
+    "credentials_not_provided": {
+        "detail": "Authentication credentials were not provided."
+    },
     "no_active_account_found": {
         "detail": "No active account found with the given credentials"
     },

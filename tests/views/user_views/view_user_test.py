@@ -1,7 +1,11 @@
 from rest_framework.test import APITestCase
 
 from tests.factories import user_factories
-from tests.mocks.user_mocks import user_data, message_data, expected_data
+from tests.mocks.user_mocks import (
+    user_data,
+    user_expected_data,
+    user_message_data
+)
 
 
 class UserViewTest(APITestCase):
@@ -30,14 +34,14 @@ class UserViewTest(APITestCase):
         )
 
         expected_status_code = 400
-        expected_body = expected_data.expected_data[
+        expected_body = user_expected_data.expected_data[
             "invalid_expected"
         ]
 
         response_status_code = response.status_code
         response_body = response.json()
 
-        message_status_code = message_data.message_status_code(
+        message_status_code = user_message_data.message_status_code(
             expected_status_code
         )
         message_body = ("Verify if returned body for invalid"
@@ -65,14 +69,14 @@ class UserViewTest(APITestCase):
 
         expected_status_code = 201
         expected_body = {
-            **expected_data.dinamic_response(response),
+            **user_expected_data.dinamic_response(response),
             "is_colaborator": True
         }
 
         response_status_code = response.status_code
         response_body = response.json()
 
-        message_status_code = message_data.message_status_code(
+        message_status_code = user_message_data.message_status_code(
             expected_status_code
         )
         message_body = ("Verify if returned body for valid"
@@ -100,7 +104,7 @@ class UserViewTest(APITestCase):
 
         expected_status_code = 201
         expected_body = {
-            **expected_data.dinamic_response(response),
+            **user_expected_data.dinamic_response(response),
             "is_colaborator": False,
             "status_for_loan": True
         }
@@ -108,7 +112,7 @@ class UserViewTest(APITestCase):
         response_status_code = response.status_code
         response_body = response.json()
 
-        message_status_code = message_data.message_status_code(
+        message_status_code = user_message_data.message_status_code(
             expected_status_code
         )
         message_body = ("Verify if returned body for valid"
@@ -135,14 +139,14 @@ class UserViewTest(APITestCase):
         )
 
         expected_status_code = 400
-        expected_body = expected_data.expected_data[
+        expected_body = user_expected_data.expected_data[
             "email_username_already_in_use"
         ]
 
         response_status_code = response.status_code
         response_body = response.json()
 
-        message_status_code = message_data.message_status_code(
+        message_status_code = user_message_data.message_status_code(
             expected_status_code
         )
         message_body = ("Verify if returned body for non unique"
@@ -177,7 +181,7 @@ class UserViewTest(APITestCase):
 
         expected_status_code = 200
         expected_body = {
-            **expected_data.dinamic_self(self),
+            **user_expected_data.dinamic_self(self),
             "is_colaborator": False,
             "status_for_loan": True
         }
@@ -185,7 +189,7 @@ class UserViewTest(APITestCase):
         response_status_code = response.status_code
         response_body = response.json()["results"][0]
 
-        message_status_code = message_data.message_status_code(
+        message_status_code = user_message_data.message_status_code(
             expected_status_code
         )
         message_body = ("Verify if returned body for list"
@@ -214,7 +218,7 @@ class UserViewTest(APITestCase):
         response_status_code = response.status_code
         response_count = response.json()["count"]
 
-        message_status_code = message_data.message_status_code(
+        message_status_code = user_message_data.message_status_code(
             expected_status_code
         )
         message_count = ("Verify if returned count for list"

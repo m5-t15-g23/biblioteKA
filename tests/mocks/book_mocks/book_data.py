@@ -13,8 +13,18 @@ book_data = {
         "author": "Alice Zhao",
         "description": "A practical guide to use SQL",
         "page_numbers": 319,
-        "language": "english",
+        "language": "English",
         "genre": "Education",
         "copies_number": 3
     }
+}
+
+invalid_data = {
+    "invalid_book": {
+        "title": 123,
+        "description": [],
+        "page_numbers": "500",
+        "language": "english",
+        "genre": {}
+    } 
 }

@@ -2,7 +2,11 @@ from rest_framework.test import APITestCase
 from datetime import datetime as dt, timedelta as td
 
 from tests.factories import user_factories, book_factories, copy_factories
-from tests.mocks.user_mocks import user_data, message_data, expected_data
+from tests.mocks.user_mocks import (
+    user_data,
+    user_expected_data,
+    user_message_data
+)
 from tests.mocks.book_mocks import book_data
 
 from loans.models import Loan
@@ -39,7 +43,7 @@ class UserDetailViewTest(APITestCase):
         expected_status_code = 401
         response_status_code = response.status_code
 
-        message = message_data.message_data[
+        message = user_message_data.message_data[
             "non_give_authentication_class"
         ]
 
@@ -54,14 +58,14 @@ class UserDetailViewTest(APITestCase):
         response = self.client.get(path=base_url)
 
         expected_status_code = 403
-        expected_body = expected_data.expected_data[
+        expected_body = user_expected_data.expected_data[
             "non_permission"
         ]
 
-        message_status_code = message_data.message_status_code(
+        message_status_code = user_message_data.message_status_code(
             expected_status_code
         )
-        message_body = message_data.message_data[
+        message_body = user_message_data.message_data[
             "colaborator_authorization"
         ]
 
@@ -95,10 +99,10 @@ class UserDetailViewTest(APITestCase):
             "status_for_loan": True
         }
 
-        message_status_code = message_data.message_status_code(
+        message_status_code = user_message_data.message_status_code(
             expected_status_code
         )
-        message_body = message_data.message_data[
+        message_body = user_message_data.message_data[
             "message_body_is_correct"
         ]
 
@@ -123,7 +127,7 @@ class UserDetailViewTest(APITestCase):
         expected_status_code = 401
         response_status_code = response.status_code
 
-        message = message_data.message_data[
+        message = user_message_data.message_data[
             "non_give_authentication_class"
         ]
 
@@ -138,14 +142,14 @@ class UserDetailViewTest(APITestCase):
         response = self.client.patch(path=base_url)
 
         expected_status_code = 403
-        expected_body = expected_data.expected_data[
+        expected_body = user_expected_data.expected_data[
             "non_permission"
         ]
 
-        message_status_code = message_data.message_status_code(
+        message_status_code = user_message_data.message_status_code(
             expected_status_code
         )
-        message_body = message_data.message_data[
+        message_body = user_message_data.message_data[
             "colaborator_authorization"
         ]
 
@@ -176,10 +180,10 @@ class UserDetailViewTest(APITestCase):
             "detail": "User didn't have loans yet"
         }
 
-        message_status_code = message_data.message_status_code(
+        message_status_code = user_message_data.message_status_code(
             expected_status_code
         )
-        message_body = message_data.message_data[
+        message_body = user_message_data.message_data[
             "message_body_is_correct"
         ]
 
@@ -215,10 +219,10 @@ class UserDetailViewTest(APITestCase):
             "detail": "User first loan is already in permited period"
         }
 
-        message_status_code = message_data.message_status_code(
+        message_status_code = user_message_data.message_status_code(
             expected_status_code
         )
-        message_body = message_data.message_data[
+        message_body = user_message_data.message_data[
             "message_body_is_correct"
         ]
 
@@ -255,15 +259,15 @@ class UserDetailViewTest(APITestCase):
 
         expected_status_code = 200
         expected_body = {
-            **expected_data.dinamic_self(self),
+            **user_expected_data.dinamic_self(self),
             "is_colaborator": False,
             "status_for_loan": False
         }
 
-        message_status_code = message_data.message_status_code(
+        message_status_code = user_message_data.message_status_code(
             expected_status_code
         )
-        message_body = message_data.message_data[
+        message_body = user_message_data.message_data[
             "message_body_is_correct"
         ]
 
