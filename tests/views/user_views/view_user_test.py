@@ -1,7 +1,7 @@
 from rest_framework.test import APITestCase
-from rest_framework_simplejwt.tokens import AccessToken
 
-from users.models import User
+from tests.factories import user_factories
+from tests.mocks.user_mocks import user_data, message_data, expected_data
 
 
 class UserViewTest(APITestCase):
@@ -9,66 +9,39 @@ class UserViewTest(APITestCase):
     def setUpTestData(cls) -> None:
         cls.BASE_URL = "/api/users/"
 
-        cls.colaborator = User.objects.create_superuser(
-            email="colaborator@mail.com",
-            username="colaborator",
-            password="1234",
-            first_name="colabo",
-            last_name="rator",
-            is_colaborator=True
+        colaborator_data = user_data.users_data["colaborator_data"]
+        student_data = user_data.users_data["student_data"]
+
+        cls.colaborator, cls.colaborator_token = (
+            user_factories.create_colaborator_with_token(colaborator_data)
         )
 
-        cls.student = User.objects.create_user(
-            email="student@mail.com",
-            username="student",
-            password="1234",
-            first_name="stu",
-            last_name="dent"
+        cls.student, cls.student_token = (
+            user_factories.create_student_with_token(student_data)
         )
-
-        cls.colaborator_token = str(AccessToken.for_user(cls.colaborator))
-        cls.student_token = str(AccessToken.for_user(cls.student))
 
     def test_user_creation_with_invalid_data(self):
-        user_data = {
-            "email": "nonemail",
-            "username": 1234,
-            "last_name": [],
-            "is_colaborator": {}
-        }
+        invalid_data = user_data.invalid_data["user_data"]
 
         response = self.client.post(
             path=self.BASE_URL,
-            data=user_data,
+            data=invalid_data,
             format="json"
         )
 
         expected_status_code = 400
-        expected_body = {
-            "email": [
-                "Enter a valid email address."
-            ],
-            "first_name": [
-                "This field is required."
-            ],
-            "last_name": [
-                "Not a valid string."
-            ],
-            "password": [
-                "This field is required."
-            ],
-            "is_colaborator": [
-                "Must be a valid boolean."
-            ]
-        }
+        expected_body = expected_data.expected_data[
+            "invalid_expected"
+        ]
 
         response_status_code = response.status_code
         response_body = response.json()
 
-        message_status_code = (f"Verify if returned status_code for invalid"
-                               f" data is {expected_status_code}")
-        message_body = (f"Verify if returned body for invalid"
-                        f" data is correct")
+        message_status_code = message_data.message_status_code(
+            expected_status_code
+        )
+        message_body = ("Verify if returned body for invalid"
+                        " data is correct")
 
         self.assertEqual(
             expected_status_code,
@@ -82,14 +55,7 @@ class UserViewTest(APITestCase):
         )
 
     def test_colaborator_creation(self):
-        colaborator_data = {
-            "email": "colaboratortest@mail.com",
-            "username": "colaboratortest",
-            "password": "1234",
-            "first_name": "colabo",
-            "last_name": "rator",
-            "is_colaborator": True
-        }
+        colaborator_data = user_data.users_data["colaborator_two_data"]
 
         response = self.client.post(
             path=self.BASE_URL,
@@ -99,21 +65,18 @@ class UserViewTest(APITestCase):
 
         expected_status_code = 201
         expected_body = {
-            "id": response.json()["id"],
-            "email": response.json()["email"],
-            "username": response.json()["username"],
-            "first_name": response.json()["first_name"],
-            "last_name": response.json()["last_name"],
+            **expected_data.dinamic_response(response),
             "is_colaborator": True
         }
 
         response_status_code = response.status_code
         response_body = response.json()
 
-        message_status_code = (f"Verify if returned status_code for valid"
-                               f" data is {expected_status_code}")
-        message_body = (f"Verify if returned body for valid"
-                        f" data is correct")
+        message_status_code = message_data.message_status_code(
+            expected_status_code
+        )
+        message_body = ("Verify if returned body for valid"
+                        " data is correct")
 
         self.assertEqual(
             expected_status_code,
@@ -127,13 +90,7 @@ class UserViewTest(APITestCase):
         )
 
     def test_student_creation(self):
-        student_data = {
-            "email": "studenttest@mail.com",
-            "username": "studenttest",
-            "password": "1234",
-            "first_name": "stu",
-            "last_name": "dent"
-        }
+        student_data = user_data.users_data["student_two_data"]
 
         response = self.client.post(
             path=self.BASE_URL,
@@ -143,11 +100,7 @@ class UserViewTest(APITestCase):
 
         expected_status_code = 201
         expected_body = {
-            "id": response.json()["id"],
-            "email": response.json()["email"],
-            "username": response.json()["username"],
-            "first_name": response.json()["first_name"],
-            "last_name": response.json()["last_name"],
+            **expected_data.dinamic_response(response),
             "is_colaborator": False,
             "status_for_loan": True
         }
@@ -155,10 +108,11 @@ class UserViewTest(APITestCase):
         response_status_code = response.status_code
         response_body = response.json()
 
-        message_status_code = (f"Verify if returned status_code for valid"
-                               f" data is {expected_status_code}")
-        message_body = (f"Verify if returned body for valid"
-                        f" data is correct")
+        message_status_code = message_data.message_status_code(
+            expected_status_code
+        )
+        message_body = ("Verify if returned body for valid"
+                        " data is correct")
 
         self.assertEqual(
             expected_status_code,
@@ -172,13 +126,7 @@ class UserViewTest(APITestCase):
         )
 
     def test_unique_email_and_username(self):
-        student_data = {
-            "email": "student@mail.com",
-            "username": "student",
-            "password": "1234",
-            "first_name": "stu",
-            "last_name": "dent"
-        }
+        student_data = user_data.users_data["student_data"]
 
         response = self.client.post(
             path=self.BASE_URL,
@@ -187,22 +135,18 @@ class UserViewTest(APITestCase):
         )
 
         expected_status_code = 400
-        expected_body = {
-            "email": [
-                "Email already in use"
-            ],
-            "username": [
-                "Username already in use"
-            ]
-        }
+        expected_body = expected_data.expected_data[
+            "email_username_already_in_use"
+        ]
 
         response_status_code = response.status_code
         response_body = response.json()
 
-        message_status_code = (f"Verify if returned status_code for non unique"
-                               f" email/username is {expected_status_code}")
-        message_body = (f"Verify if returned body for non unique"
-                        f" email/username is correct")
+        message_status_code = message_data.message_status_code(
+            expected_status_code
+        )
+        message_body = ("Verify if returned body for non unique"
+                        " email/username is correct")
 
         self.assertEqual(
             expected_status_code,
@@ -233,11 +177,7 @@ class UserViewTest(APITestCase):
 
         expected_status_code = 200
         expected_body = {
-            "id": self.student.id,
-            "email": self.student.email,
-            "username": self.student.username,
-            "first_name": self.student.first_name,
-            "last_name": self.student.last_name,
+            **expected_data.dinamic_self(self),
             "is_colaborator": False,
             "status_for_loan": True
         }
@@ -245,10 +185,11 @@ class UserViewTest(APITestCase):
         response_status_code = response.status_code
         response_body = response.json()["results"][0]
 
-        message_status_code = (f"Verify if returned status_code for valid"
-                               f" data is {expected_status_code}")
-        message_body = (f"Verify if returned body for list"
-                        f" student is correct")
+        message_status_code = message_data.message_status_code(
+            expected_status_code
+        )
+        message_body = ("Verify if returned body for list"
+                        " student is correct")
 
         self.assertEqual(
             expected_status_code,
@@ -273,10 +214,11 @@ class UserViewTest(APITestCase):
         response_status_code = response.status_code
         response_count = response.json()["count"]
 
-        message_status_code = (f"Verify if returned status_code for valid"
-                               f" data is {expected_status_code}")
-        message_count = (f"Verify if returned count for list"
-                         f" all users is correct")
+        message_status_code = message_data.message_status_code(
+            expected_status_code
+        )
+        message_count = ("Verify if returned count for list"
+                         " all users is correct")
 
         self.assertEqual(
             expected_status_code,

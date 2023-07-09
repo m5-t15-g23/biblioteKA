@@ -1,7 +1,7 @@
 from rest_framework.test import APITestCase
-from rest_framework_simplejwt.tokens import AccessToken, RefreshToken
 
-from users.models import User
+from tests.factories import user_factories
+from tests.mocks.user_mocks import user_data, message_data, expected_data
 
 
 class UserLoginViewTest(APITestCase):
@@ -9,20 +9,15 @@ class UserLoginViewTest(APITestCase):
     def setUpTestData(cls) -> None:
         cls.BASE_URL = "/api/users/login"
 
-        cls.colaborator = User.objects.create_superuser(
-            email="colaborator@mail.com",
-            username="colaborator",
-            password="1234",
-            first_name="colabo",
-            last_name="rator",
-            is_colaborator=True
+        colaborator_data = user_data.users_data["colaborator_data"]
+        student_data = user_data.users_data["student_data"]
+
+        cls.colaborator, cls.colaborator_token = (
+            user_factories.create_colaborator_with_token(colaborator_data)
         )
 
-        cls.colaborator_access_token = str(
-            AccessToken.for_user(cls.colaborator)
-        )
-        cls.colaborator_refresh_token = str(
-            RefreshToken.for_user(cls.colaborator)
+        cls.student, cls.student_token = (
+            user_factories.create_student_with_token(student_data)
         )
 
         cls.maxDiff = None
@@ -31,22 +26,18 @@ class UserLoginViewTest(APITestCase):
         response = self.client.post(path=self.BASE_URL)
 
         expected_status_code = 400
-        expected_body = {
-            "username": [
-                "This field is required."
-            ],
-            "password": [
-                "This field is required."
-            ]
-        }
+        expected_body = expected_data.expected_data[
+            "username_password_fileds_required"
+        ]
 
         response_status_code = response.status_code
         response_body = response.json()
 
-        message_status_code = (f"Verify if returned status_code for invalid"
-                               f" data is {expected_status_code}")
-        message_body = (f"Verify if returned body for empty"
-                        f" data is correct")
+        message_status_code = message_data.message_status_code(
+            expected_status_code
+        )
+        message_body = ("Verify if returned body for empty"
+                        " data is correct")
 
         self.assertEqual(
             expected_status_code,
@@ -68,17 +59,18 @@ class UserLoginViewTest(APITestCase):
         response = self.client.post(path=self.BASE_URL, data=data)
 
         expected_status_code = 401
-        expected_body = {
-            "detail": "No active account found with the given credentials"
-        }
+        expected_body = expected_data.expected_data[
+            "no_active_account_found"
+        ]
 
         response_status_code = response.status_code
         response_body = response.json()
 
-        message_status_code = (f"Verify if returned status_code for invalid"
-                               f" data is {expected_status_code}")
-        message_body = (f"Verify if returned body for invalid"
-                        f" data is correct")
+        message_status_code = message_data.message_status_code(
+            expected_status_code
+        )
+        message_body = ("Verify if returned body for invalid"
+                        " data is correct")
 
         self.assertEqual(
             expected_status_code,
@@ -105,10 +97,11 @@ class UserLoginViewTest(APITestCase):
         response_status_code = response.status_code
         response_keys = set(response.json().keys())
 
-        message_status_code = (f"Verify if returned status_code for invalid"
-                               f" data is {expected_status_code}")
-        message_body = (f"Verify if returned body for valid"
-                        f" data is refresh and access token")
+        message_status_code = message_data.message_status_code(
+            expected_status_code
+        )
+        message_body = ("Verify if returned body for valid"
+                        " data is refresh and access token")
 
         self.assertEqual(
             expected_status_code,

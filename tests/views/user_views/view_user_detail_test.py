@@ -1,10 +1,10 @@
 from rest_framework.test import APITestCase
-from rest_framework_simplejwt.tokens import AccessToken
 from datetime import datetime as dt, timedelta as td
 
-from users.models import User
-from books.models import Book
-from copies.models import Copy
+from tests.factories import user_factories, book_factories, copy_factories
+from tests.mocks.user_mocks import user_data, message_data, expected_data
+from tests.mocks.book_mocks import book_data
+
 from loans.models import Loan
 
 
@@ -13,42 +13,24 @@ class UserDetailViewTest(APITestCase):
     def setUpTestData(cls) -> None:
         cls.BASE_URL = "/api/users/"
 
-        cls.colaborator = User.objects.create_superuser(
-            email="colaborator@mail.com",
-            username="colaborator",
-            password="1234",
-            first_name="colabo",
-            last_name="rator",
-            is_colaborator=True
+        colaborator_data = user_data.users_data["colaborator_data"]
+        student_data = user_data.users_data["student_data"]
+
+        cls.colaborator, cls.colaborator_token = (
+            user_factories.create_colaborator_with_token(colaborator_data)
         )
 
-        cls.student = User.objects.create_user(
-            email="student@mail.com",
-            username="student",
-            password="1234",
-            first_name="stu",
-            last_name="dent"
+        cls.student, cls.student_token = (
+            user_factories.create_student_with_token(student_data)
         )
 
-        cls.colaborator_token = str(AccessToken.for_user(cls.colaborator))
-        cls.student_token = str(AccessToken.for_user(cls.student))
-
-        cls.book = Book.objects.create(
-            title="Clean Code",
-            author="Robert C. Martin",
-            description="How to write clean code",
-            page_numbers=500,
-            language="English",
-            genre="Education",
-            copies_number=3
+        cls.book = book_factories.create_book(
+            book_data.book_data["clean_code"]
         )
 
-        cls.book_copies = [Copy.objects.create(book=cls.book)
-                           for _ in range(3)]
-        cls.copies = Copy.objects.all()
-        cls.copy_one = cls.copies[0]
-        cls.copy_two = cls.copies[1]
-        cls.copy_three = cls.copies[2]
+        cls.copy_one, cls.copy_two, cls.copy_three = (
+            copy_factories.create_copies(cls.book)
+        )
 
     def test_list_student_status_without_token(self):
         base_url = self.BASE_URL + str(self.student.id) + "/"
@@ -57,7 +39,9 @@ class UserDetailViewTest(APITestCase):
         expected_status_code = 401
         response_status_code = response.status_code
 
-        message = "Verify authentication class was given"
+        message = message_data.message_data[
+            "non_give_authentication_class"
+        ]
 
         self.assertEqual(expected_status_code, response_status_code, message)
 
@@ -70,12 +54,16 @@ class UserDetailViewTest(APITestCase):
         response = self.client.get(path=base_url)
 
         expected_status_code = 403
-        expected_body = {
-            "detail": "You do not have permission to perform this action."
-        }
+        expected_body = expected_data.expected_data[
+            "non_permission"
+        ]
 
-        message_status_code = "Verify if return status code is 403"
-        message_body = "Verify if permission class only auhtorize colaborators"
+        message_status_code = message_data.message_status_code(
+            expected_status_code
+        )
+        message_body = message_data.message_data[
+            "colaborator_authorization"
+        ]
 
         response_status_code = response.status_code
         response_body = response.json()
@@ -107,8 +95,12 @@ class UserDetailViewTest(APITestCase):
             "status_for_loan": True
         }
 
-        message_status_code = "Verify if return status code is 200"
-        message_body = "Verify if returned body is correct"
+        message_status_code = message_data.message_status_code(
+            expected_status_code
+        )
+        message_body = message_data.message_data[
+            "message_body_is_correct"
+        ]
 
         response_status_code = response.status_code
         response_body = response.json()
@@ -131,7 +123,9 @@ class UserDetailViewTest(APITestCase):
         expected_status_code = 401
         response_status_code = response.status_code
 
-        message = "Verify authentication class was given"
+        message = message_data.message_data[
+            "non_give_authentication_class"
+        ]
 
         self.assertEqual(expected_status_code, response_status_code, message)
 
@@ -144,12 +138,16 @@ class UserDetailViewTest(APITestCase):
         response = self.client.patch(path=base_url)
 
         expected_status_code = 403
-        expected_body = {
-            "detail": "You do not have permission to perform this action."
-        }
+        expected_body = expected_data.expected_data[
+            "non_permission"
+        ]
 
-        message_status_code = "Verify if return status code is 403"
-        message_body = "Verify if permission class only auhtorize colaborators"
+        message_status_code = message_data.message_status_code(
+            expected_status_code
+        )
+        message_body = message_data.message_data[
+            "colaborator_authorization"
+        ]
 
         response_status_code = response.status_code
         response_body = response.json()
@@ -178,8 +176,12 @@ class UserDetailViewTest(APITestCase):
             "detail": "User didn't have loans yet"
         }
 
-        message_status_code = "Verify if return status code is 406"
-        message_body = "Verify if returned body is correct"
+        message_status_code = message_data.message_status_code(
+            expected_status_code
+        )
+        message_body = message_data.message_data[
+            "message_body_is_correct"
+        ]
 
         response_status_code = response.status_code
         response_body = response.json()
@@ -213,8 +215,12 @@ class UserDetailViewTest(APITestCase):
             "detail": "User first loan is already in permited period"
         }
 
-        message_status_code = "Verify if return status code is 406"
-        message_body = "Verify if returned body is correct"
+        message_status_code = message_data.message_status_code(
+            expected_status_code
+        )
+        message_body = message_data.message_data[
+            "message_body_is_correct"
+        ]
 
         response_status_code = response.status_code
         response_body = response.json()
@@ -249,17 +255,17 @@ class UserDetailViewTest(APITestCase):
 
         expected_status_code = 200
         expected_body = {
-            "id": self.student.id,
-            "email": self.student.email,
-            "username": self.student.username,
-            "first_name": self.student.first_name,
-            "last_name": self.student.last_name,
+            **expected_data.dinamic_self(self),
             "is_colaborator": False,
             "status_for_loan": False
         }
 
-        message_status_code = "Verify if return status code is 200"
-        message_body = "Verify if returned body is correct"
+        message_status_code = message_data.message_status_code(
+            expected_status_code
+        )
+        message_body = message_data.message_data[
+            "message_body_is_correct"
+        ]
 
         response_status_code = response.status_code
         response_body = response.json()
