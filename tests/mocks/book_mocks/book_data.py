@@ -26,5 +26,5 @@ invalid_data = {
         "page_numbers": "500",
         "language": "english",
         "genre": {}
-    } 
+    }
 }

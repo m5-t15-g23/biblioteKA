@@ -11,13 +11,13 @@ def dinamic_response(response: HttpResponse):
     }
 
 
-def dinamic_self(self):
+def dinamic_self(student):
     return {
-        "id": self.student.id,
-        "email": self.student.email,
-        "username": self.student.username,
-        "first_name": self.student.first_name,
-        "last_name": self.student.last_name,
+        "id": student.id,
+        "email": student.email,
+        "username": student.username,
+        "first_name": student.first_name,
+        "last_name": student.last_name,
     }
 
 

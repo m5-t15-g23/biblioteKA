@@ -259,7 +259,7 @@ class UserDetailViewTest(APITestCase):
 
         expected_status_code = 200
         expected_body = {
-            **user_expected_data.dinamic_self(self),
+            **user_expected_data.dinamic_self(self.student),
             "is_colaborator": False,
             "status_for_loan": False
         }

@@ -1,4 +1,5 @@
 from django.http import HttpResponse
+from datetime import datetime as dt
 
 
 def dinamic_response(response: HttpResponse):
@@ -12,6 +13,24 @@ def dinamic_response(response: HttpResponse):
         "language": response.json()["language"],
         "genre": response.json()["genre"],
         "disponibility": response.json()["disponibility"],
+    }
+
+
+def dinamic_self(book):
+    date_format = "%Y-%m-%d"
+    return {
+        "id": book.id,
+        "title": book.title,
+        "author": book.author,
+        "description": book.description,
+        "publication_year": book.publication_year.strftime(
+            date_format
+        ),
+        "page_numbers": book.page_numbers,
+        "language": book.language,
+        "genre": book.genre,
+        "disponibility": book.disponibility,
+
     }
 
 

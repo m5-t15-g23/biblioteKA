@@ -1,7 +1,7 @@
 from rest_framework.test import APITestCase
 
 from copies.models import Copy
-from tests.factories import user_factories, book_factories, copy_factories
+from tests.factories import user_factories, book_factories
 from tests.mocks.user_mocks import (
     user_data,
     user_expected_data,

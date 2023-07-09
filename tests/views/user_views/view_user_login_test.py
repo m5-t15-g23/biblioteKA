@@ -1,7 +1,11 @@
 from rest_framework.test import APITestCase
 
 from tests.factories import user_factories
-from tests.mocks.user_mocks import user_data, user_expected_data, user_message_data
+from tests.mocks.user_mocks import (
+    user_data,
+    user_expected_data,
+    user_message_data
+)
 
 
 class UserLoginViewTest(APITestCase):
