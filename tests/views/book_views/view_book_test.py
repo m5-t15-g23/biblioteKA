@@ -1,5 +1,6 @@
 from rest_framework.test import APITestCase
 
+from copies.models import Copy
 from tests.factories import user_factories, book_factories, copy_factories
 from tests.mocks.user_mocks import (
     user_data,
@@ -32,16 +33,16 @@ class BookView(APITestCase):
             book_data.book_data["sql"]
         )
 
-        (cls.copy_clean_code_one,
-         cls.copy_clean_code_two,
-         cls.copy_clean_code_three) = (
-            copy_factories.create_copies(cls.book)
-        )
-        (cls.copy_sql_one,
-         cls.copy_sql_two,
-         cls.copy_sql_three) = (
-            copy_factories.create_copies(cls.book)
-        )
+        # (cls.copy_clean_code_one,
+        #  cls.copy_clean_code_two,
+        #  cls.copy_clean_code_three) = (
+        #     copy_factories.create_copies(cls.book)
+        # )
+        # (cls.copy_sql_one,
+        #  cls.copy_sql_two,
+        #  cls.copy_sql_three) = (
+        #     copy_factories.create_copies(cls.book)
+        # )
 
     def test_if_a_non_logged_user_cant_create_a_book(self):
         data = book_data.book_data["clean_code"]
@@ -192,6 +193,30 @@ class BookView(APITestCase):
             expected_body,
             response_body,
             message_body
+        )
+
+    def test_if_copies_are_created_with_a_book_creation(self):
+        data = book_data.book_data["sql"]
+
+        self.client.credentials(
+            HTTP_AUTHORIZATION="Bearer " + self.colaborator_token
+        )
+        self.client.post(
+            path=self.BASE_URL,
+            data=data,
+            format="json"
+        )
+
+        copies = Copy.objects.all()
+        copies_number = data["copies_number"]
+
+        message = ("Verify if book view are creating copies and make sure"
+                   " that the number of copies is equal to copies_number"
+                   " field in book input")
+
+        self.assertTrue(
+            len(copies) == copies_number,
+            message
         )
 
     def test_list_all_books(self):
