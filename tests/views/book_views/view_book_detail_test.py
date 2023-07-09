@@ -12,17 +12,23 @@ from tests.mocks.book_mocks import book_data, book_expected_data
 class BookDetailViewTest(APITestCase):
     @classmethod
     def setUpTestData(cls) -> None:
+        colaborator_data = user_data.users_data["colaborator_data"]
         student_data = user_data.users_data["student_data"]
 
+        cls.colaborator, cls.colaborator_token = (
+            user_factories.create_colaborator_with_token(colaborator_data)
+        )
         cls.student, cls.student_token = (
             user_factories.create_student_with_token(student_data)
         )
 
         cls.book = book_factories.create_book(
-            book_data.book_data["clean_code"]
+            book_data.book_data["clean_code"],
+            colaborator=cls.colaborator
         )
         cls.book_two = book_factories.create_book(
-            book_data.book_data["sql"]
+            book_data.book_data["sql"],
+            colaborator=cls.colaborator
         )
 
         cls.BASE_URL = f"/api/books/{cls.book.id}/"

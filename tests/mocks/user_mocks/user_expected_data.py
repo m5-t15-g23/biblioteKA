@@ -1,13 +1,13 @@
 from django.http import HttpResponse
 
 
-def dinamic_response(response: HttpResponse):
+def dinamic_response(user_data, id):
     return {
-        "id": response.json()["id"],
-        "email": response.json()["email"],
-        "username": response.json()["username"],
-        "first_name": response.json()["first_name"],
-        "last_name": response.json()["last_name"],
+        "id": id,
+        "email": user_data["email"],
+        "username": user_data["username"],
+        "first_name": user_data["first_name"],
+        "last_name": user_data["last_name"],
     }
 
 

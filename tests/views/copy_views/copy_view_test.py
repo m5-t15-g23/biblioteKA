@@ -20,13 +20,13 @@ class CopylViewTest(APITestCase):
         cls.colaborator, cls.colaborator_token = (
             user_factories.create_colaborator_with_token(colaborator_data)
         )
-
         cls.student, cls.student_token = (
             user_factories.create_student_with_token(student_data)
         )
 
         cls.book = book_factories.create_book(
-            book_data.book_data["clean_code"]
+            book_data.book_data["clean_code"],
+            colaborator=cls.colaborator
         )
 
         cls.copy_one, cls.copy_two, cls.copy_three = (

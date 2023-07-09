@@ -29,7 +29,8 @@ class UserDetailViewTest(APITestCase):
         )
 
         cls.book = book_factories.create_book(
-            book_data.book_data["clean_code"]
+            book_data.book_data["clean_code"],
+            colaborator=cls.colaborator
         )
 
         cls.copy_one, cls.copy_two, cls.copy_three = (

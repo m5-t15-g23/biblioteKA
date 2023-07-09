@@ -69,7 +69,10 @@ class UserViewTest(APITestCase):
 
         expected_status_code = 201
         expected_body = {
-            **user_expected_data.dinamic_response(response),
+            **user_expected_data.dinamic_response(
+                colaborator_data,
+                self.student.id + 1
+            ),
             "is_colaborator": True
         }
 
@@ -104,7 +107,10 @@ class UserViewTest(APITestCase):
 
         expected_status_code = 201
         expected_body = {
-            **user_expected_data.dinamic_response(response),
+            **user_expected_data.dinamic_response(
+                student_data,
+                self.student.id + 2
+            ),
             "is_colaborator": False,
             "status_for_loan": True
         }
@@ -181,7 +187,7 @@ class UserViewTest(APITestCase):
 
         expected_status_code = 200
         expected_body = {
-            **user_expected_data.dinamic_self(self),
+            **user_expected_data.dinamic_self(self.student),
             "is_colaborator": False,
             "status_for_loan": True
         }

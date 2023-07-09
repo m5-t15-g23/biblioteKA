@@ -1,18 +1,17 @@
-from django.http import HttpResponse
 from datetime import datetime as dt
 
 
-def dinamic_response(response: HttpResponse):
+def dinamic_response(book_data, id):
     return {
-        "id": response.json()["id"],
-        "title": response.json()["title"],
-        "author": response.json()["author"],
-        "description": response.json()["description"],
-        "publication_year": response.json()["publication_year"],
-        "page_numbers": response.json()["page_numbers"],
-        "language": response.json()["language"],
-        "genre": response.json()["genre"],
-        "disponibility": response.json()["disponibility"],
+        "id": id,
+        "title": book_data["title"],
+        "author": book_data["author"],
+        "description": book_data["description"],
+        "publication_year": str(dt.now().date()),
+        "page_numbers": book_data["page_numbers"],
+        "language": book_data["language"],
+        "genre": book_data["genre"],
+        "disponibility": True,
     }
 
 

@@ -34,7 +34,7 @@ class IsStudent(permissions.BasePermission):
                 request.user.is_colaborator is False)
 
 
-class LoanOwner(permissions.BasePermission):
+class IsLoanOwner(permissions.BasePermission):
     def has_object_permission(self, request, view: View, obj: Loan):
         return (request.user.is_authenticated and
                 request.user.id == obj.user.id)

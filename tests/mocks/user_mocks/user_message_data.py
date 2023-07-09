@@ -7,5 +7,7 @@ message_data = {
     "credentials_not_provided": "Verify if token is necessary in view",
     "non_give_authentication_class": "Verify authentication class was given",
     "colaborator_authorization": ("Verify if permission class only"
-                                  " auhtorize colaborators")
+                                  " auhtorize colaborators"),
+    "student_authorization": ("Verify if permission class only"
+                              " auhtorize students")
 }
