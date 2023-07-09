@@ -10,7 +10,7 @@ from tests.mocks.user_mocks import (
 from tests.mocks.book_mocks import book_data, book_expected_data
 
 
-class BookView(APITestCase):
+class BookViewTest(APITestCase):
     @classmethod
     def setUpTestData(cls) -> None:
         cls.BASE_URL = "/api/books/"

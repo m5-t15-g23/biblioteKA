@@ -9,7 +9,7 @@ from tests.mocks.user_mocks import (
 from tests.mocks.book_mocks import book_data, book_expected_data
 
 
-class BookDetailView(APITestCase):
+class BookDetailViewTest(APITestCase):
     @classmethod
     def setUpTestData(cls) -> None:
         student_data = user_data.users_data["student_data"]
