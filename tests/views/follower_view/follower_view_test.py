@@ -1,6 +1,5 @@
 from rest_framework.test import APITestCase
 
-from copies.models import Copy
 from tests.factories import user_factories, book_factories, follow_factories
 from tests.mocks.user_mocks import (
     user_data,
@@ -179,6 +178,110 @@ class FollowViewTest(APITestCase):
             message_status_code
         )
         self.assertDictEqual(
+            expected_body,
+            response_body,
+            message_body
+        )
+
+    def test_if_a_non_logged_user_cant_list_follows(self):
+        response = self.client.get(
+            path=self.BASE_URL,
+        )
+
+        expected_status_code = 401
+        expected_body = user_expected_data.expected_data[
+            "credentials_not_provided"
+        ]
+
+        message_status_code = user_message_data.message_status_code(
+            expected_status_code
+        )
+        message_body = user_message_data.message_data[
+            "credentials_not_provided"
+        ]
+
+        response_status_code = response.status_code
+        response_body = response.json()
+
+        self.assertEqual(
+            expected_status_code,
+            response_status_code,
+            message_status_code
+        )
+        self.assertDictEqual(
+            expected_body,
+            response_body,
+            message_body
+        )
+
+    def test_if_a_colaborator_cant_list_follows_by_student_view(self):
+        self.client.credentials(
+            HTTP_AUTHORIZATION="Bearer " + self.colaborator_token
+        )
+        response = self.client.get(
+            path=self.BASE_URL,
+        )
+
+        expected_status_code = 403
+        expected_body = user_expected_data.expected_data[
+            "non_permission"
+        ]
+
+        message_status_code = user_message_data.message_status_code(
+            expected_status_code
+        )
+        message_body = user_message_data.message_data[
+            "colaborator_authorization"
+        ]
+
+        response_status_code = response.status_code
+        response_body = response.json()
+
+        self.assertEqual(
+            expected_status_code,
+            response_status_code,
+            message_status_code
+        )
+        self.assertDictEqual(
+            expected_body,
+            response_body,
+            message_body
+        )
+
+    def test_if_a_student_can_list_own_follows(self):
+        self.client.credentials(
+            HTTP_AUTHORIZATION="Bearer " + self.student_token
+        )
+        response = self.client.get(
+            path=self.BASE_URL,
+            student=self.student,
+        )
+
+        expected_status_code = 200
+        expected_body = [
+            follow_expected_data.dinamic_self(
+                self.follow.id,
+                self.student,
+                self.book_two
+            )
+        ]
+
+        message_status_code = user_message_data.message_status_code(
+            expected_status_code
+        )
+        message_body = user_message_data.message_data[
+            "message_body_is_correct"
+        ]
+
+        response_status_code = response.status_code
+        response_body = response.json()["results"]
+
+        self.assertEqual(
+            expected_status_code,
+            response_status_code,
+            message_status_code
+        )
+        self.assertListEqual(
             expected_body,
             response_body,
             message_body
