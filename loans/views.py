@@ -79,25 +79,28 @@ class LoanCopyDetailView(generics.ListAPIView):
     lookup_url_kwarg = "copy_id"
 
     def get_queryset(self):
-        req_method = self.request.method
         copy_id = self.kwargs.get("copy_id", None)
         user = self.request.user
         is_colaborator = user.is_colaborator
 
-        if (
-            req_method == "GET"
-            and is_colaborator is True
-           and copy_id is not None
-           ):
-            return Loan.objects.filter(copy_id=copy_id)
-        elif (
-              req_method == "GET"
-              and is_colaborator is False
-              and copy_id is None
-             ):
-            return Loan.objects.filter(user_id=user.id)
-        elif req_method == "GET" and is_colaborator is False:
+        if is_colaborator is False:
             return Loan.objects.filter(copy_id=copy_id, user_id=user.id)
+
+        return Loan.objects.filter(copy_id=copy_id)
+
+
+class LoanListView(generics.ListAPIView):
+    authentication_classes = [JWTAuthentication]
+    permission_classes = [IsAuthenticated]
+
+    serializer_class = LoanSerializer
+
+    def get_queryset(self):
+        user = self.request.user
+        is_colaborator = user.is_colaborator
+
+        if is_colaborator is False:
+            return Loan.objects.filter(user_id=user.id)
 
         return Loan.objects.all()
 
