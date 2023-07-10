@@ -10,14 +10,19 @@ from .exceptions import LoanIsNotStatusAvaliable
 from copies.models import Copy
 from books.models import Book
 from users.models import User
-from users.permissions import IsAuthenticated, IsColaborator, LoanOwner
+from users.permissions import (
+    IsStudent,
+    IsColaborator,
+    IsAuthenticated,
+    IsLoanOwner
+)
 from followers.utils import send_mail_on_change
 from followers.models import Follower
 
 
 class LoanView(generics.CreateAPIView):
     authentication_classes = [JWTAuthentication]
-    permission_classes = [IsAuthenticated]
+    permission_classes = [IsStudent]
 
     serializer_class = LoanSerializer
     lookup_url_kwarg = "book_id"
@@ -29,7 +34,7 @@ class LoanView(generics.CreateAPIView):
         user = self.request.user
 
         if user.status_for_loan is False:
-            message = "This user alredy have a loan"
+            message = "User alredy have max number of loans: 3"
             raise LoanIsNotStatusAvaliable(message)
 
         if book.disponibility is False:
@@ -121,7 +126,7 @@ class LoanColaboratorDetailView(generics.ListAPIView):
 
 class LoanCheckoutView(APIView):
     authentication_classes = [JWTAuthentication]
-    permission_classes = [LoanOwner]
+    permission_classes = [IsLoanOwner]
 
     def patch(self, request: Request, loan_id) -> Response:
         loan = get_object_or_404(Loan, id=loan_id)
