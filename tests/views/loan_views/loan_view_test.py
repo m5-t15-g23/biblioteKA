@@ -126,6 +126,39 @@ class LoanViewTest(APITestCase):
             message_body
         )
 
+    def test_create_loan_with_non_existing_book(self):
+        base_url = self.BASE_URL + "9999/"
+        self.client.credentials(
+            HTTP_AUTHORIZATION="Bearer " + self.student_token
+        )
+        response = self.client.post(path=base_url)
+
+        expected_status_code = 404
+        expected_body = user_expected_data.expected_data[
+            "not found"
+        ]
+
+        message_status_code = user_message_data.message_status_code(
+            expected_status_code
+        )
+        message_body = user_message_data.message_data[
+            "message_body_is_correct"
+        ]
+
+        response_status_code = response.status_code
+        response_body = response.json()
+
+        self.assertEqual(
+            expected_status_code,
+            response_status_code,
+            message_status_code
+        )
+        self.assertDictEqual(
+            expected_body,
+            response_body,
+            message_body
+        )
+
     def test_if_a_student_can_create_an_loan(self):
         base_url = self.BASE_URL + str(self.book.id) + "/"
 

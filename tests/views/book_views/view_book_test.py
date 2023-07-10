@@ -108,7 +108,7 @@ class BookViewTest(APITestCase):
             message_body
         )
 
-    def test_book_cration_with_invalid_data(self):
+    def test_book_creation_with_invalid_data(self):
         data = book_data.invalid_data[
             "invalid_book"
         ]
