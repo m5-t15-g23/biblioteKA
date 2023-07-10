@@ -1,5 +1,6 @@
 from rest_framework import generics
 from rest_framework_simplejwt.authentication import JWTAuthentication
+from drf_spectacular.utils import extend_schema
 
 from .models import Book
 from .serializers import BookSerializer
@@ -13,6 +14,9 @@ class BookView(generics.ListCreateAPIView):
     queryset = Book.objects.all()
     serializer_class = BookSerializer
 
+    @extend_schema(
+        summary="Testeeeeee"
+    )
     def perform_create(self, serializer):
         user = self.request.user
 
@@ -26,6 +30,9 @@ class BookDetailView(generics.RetrieveAPIView):
     serializer_class = BookSerializer
     lookup_url_kwarg = "book_id"
 
+    @extend_schema(
+        summary="Testeeeeee2"
+    )
     def get_queryset(self):
         book_id = self.kwargs.get("book_id")
 
