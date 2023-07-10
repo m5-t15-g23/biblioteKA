@@ -12,7 +12,7 @@ from tests.factories import (
     loan_factories
 )
 from tests.mocks.book_mocks import book_data
-from tests.mocks.loan_mocks import loan_data, loan_expected_data
+from tests.mocks.loan_mocks import loan_expected_data
 
 
 class LoanListViewTest(APITestCase):
