@@ -12,10 +12,10 @@ from tests.factories import (
     loan_factories
 )
 from tests.mocks.book_mocks import book_data
-from tests.mocks.loan_mocks import loan_data, loan_expected_data
+from tests.mocks.loan_mocks import loan_expected_data
 
 
-class LoanViewTest(APITestCase):
+class LoanCopyDetailViewTest(APITestCase):
     @classmethod
     def setUpTestData(cls) -> None:
         colaborator_data = user_data.users_data["colaborator_data"]
@@ -54,14 +54,16 @@ class LoanViewTest(APITestCase):
             cls.student,
             cls.copy_one
         )
+        cls.loan_two = loan_factories.create_loan(
+            cls.student_two,
+            cls.copy_two
+        )
 
-        cls.BASE_URL = f"/api/loans/"
+        cls.BASE_URL = f"/api/loans/copy/{str(cls.copy_one.id)}/"
 
-    def test_if_non_authenticated_user_cant_create_loans(self):
-        base_url = self.BASE_URL + str(self.book.id) + "/"
-
-        response = self.client.post(
-            path=base_url,
+    def test_if_non_authenticated_user_cant_list_loans_by_copy_id(self):
+        response = self.client.get(
+            path=self.BASE_URL,
         )
 
         expected_status_code = 401
@@ -90,59 +92,20 @@ class LoanViewTest(APITestCase):
             message_body
         )
 
-    def test_if_an_colaborator_cant_create_an_loan(self):
-        base_url = self.BASE_URL + str(self.book.id) + "/"
-
+    def test_if_an_colaborator_can_list_loans_by_copy_id(self):
         self.client.credentials(
             HTTP_AUTHORIZATION="Bearer " + self.colaborator_token
         )
-        response = self.client.post(
-            path=base_url,
+        response = self.client.get(
+            path=self.BASE_URL
         )
 
-        expected_status_code = 403
-        expected_body = user_expected_data.expected_data[
-            "non_permission"
-        ]
-
-        message_status_code = user_message_data.message_status_code(
-            expected_status_code
-        )
-        message_body = user_message_data.message_data[
-            "student_authorization"
-        ]
-
-        response_status_code = response.status_code
-        response_body = response.json()
-
-        self.assertEqual(
-            expected_status_code,
-            response_status_code,
-            message_status_code
-        )
-        self.assertDictEqual(
-            expected_body,
-            response_body,
-            message_body
-        )
-
-    def test_if_a_student_can_create_an_loan(self):
-        base_url = self.BASE_URL + str(self.book.id) + "/"
-
-        self.client.credentials(
-            HTTP_AUTHORIZATION="Bearer " + self.student_token
-        )
-        response = self.client.post(
-            path=base_url,
-        )
-
-        expected_status_code = 201
-        expected_body = loan_expected_data.dinamic_response(
-            loan_data.loan_data["new_loan"],
+        expected_status_code = 200
+        expected_body = loan_expected_data.dinamic_self(
+            self.loan,
             self.student,
             self.copy_one.id,
-            self.book.title,
-            self.loan.id + 1
+            self.book.title
         )
 
         message_status_code = user_message_data.message_status_code(
@@ -153,7 +116,7 @@ class LoanViewTest(APITestCase):
         ]
 
         response_status_code = response.status_code
-        response_body = response.json()
+        response_body = response.json()["results"][0]
 
         self.assertEqual(
             expected_status_code,
@@ -166,66 +129,21 @@ class LoanViewTest(APITestCase):
             message_body
         )
 
-    def test_if_a_student_cant_have_more_than_3_loans(self):
-        base_url = self.BASE_URL + str(self.book.id) + "/"
-
-        self.client.credentials(
-            HTTP_AUTHORIZATION="Bearer " + self.student_two_token
-        )
-        for _ in self.copies:
-            self.client.post(path=base_url)
-
-        response = self.client.post(
-            path=base_url,
-        )
-
-        expected_status_code = 409
-        expected_body = {
-            "detail": "User alredy have max number of loans: 3"
-        }
-
-        message_status_code = user_message_data.message_status_code(
-            expected_status_code
-        )
-        message_body = user_message_data.message_data[
-            "message_body_is_correct"
-        ]
-
-        response_status_code = response.status_code
-        response_body = response.json()
-
-        self.assertEqual(
-            expected_status_code,
-            response_status_code,
-            message_status_code
-        )
-        self.assertDictEqual(
-            expected_body,
-            response_body,
-            message_body
-        )
-
-    def test_if_a_student_cant_loan_an_not_available_book(self):
-        base_url = self.BASE_URL + str(self.book.id) + "/"
-
-        for _ in self.copies:
-            self.client.credentials(
-                HTTP_AUTHORIZATION="Bearer " + self.student_two_token
-            )
-            self.client.post(path=base_url)
-
+    def test_if_a_student_can_list_own_loans_by_copy_id(self):
         self.client.credentials(
             HTTP_AUTHORIZATION="Bearer " + self.student_token
         )
-        response = self.client.post(
-            path=base_url,
+        response = self.client.get(
+            path=self.BASE_URL,
         )
 
-        expected_status_code = 409
-        expected_body = {
-            "detail": ("This book is not available, follow to check"
-                       "availability status.")
-        }
+        expected_status_code = 200
+        expected_body = loan_expected_data.dinamic_self(
+            self.loan,
+            self.student,
+            self.copy_one.id,
+            self.book.title
+        )
 
         message_status_code = user_message_data.message_status_code(
             expected_status_code
@@ -235,7 +153,7 @@ class LoanViewTest(APITestCase):
         ]
 
         response_status_code = response.status_code
-        response_body = response.json()
+        response_body = response.json()["results"][0]
 
         self.assertEqual(
             expected_status_code,
