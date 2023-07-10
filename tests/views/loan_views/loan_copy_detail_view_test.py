@@ -103,6 +103,7 @@ class LoanCopyDetailViewTest(APITestCase):
         expected_status_code = 200
         expected_body = loan_expected_data.dinamic_self(
             self.loan,
+            True,
             self.student,
             self.copy_one.id,
             self.book.title
@@ -140,6 +141,7 @@ class LoanCopyDetailViewTest(APITestCase):
         expected_status_code = 200
         expected_body = loan_expected_data.dinamic_self(
             self.loan,
+            True,
             self.student,
             self.copy_one.id,
             self.book.title

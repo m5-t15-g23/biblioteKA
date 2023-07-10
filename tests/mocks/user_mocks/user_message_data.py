@@ -9,5 +9,8 @@ message_data = {
     "colaborator_authorization": ("Verify if permission class only"
                                   " auhtorize colaborators"),
     "student_authorization": ("Verify if permission class only"
-                              " auhtorize students")
+                              " auhtorize students"),
+    "not found": {
+        "detail": "Not found"
+    }
 }

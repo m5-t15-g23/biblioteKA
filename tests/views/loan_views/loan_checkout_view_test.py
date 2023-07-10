@@ -1,4 +1,5 @@
 from rest_framework.test import APITestCase
+from datetime import datetime as dt
 
 from tests.mocks.user_mocks import (
     user_data,
@@ -15,7 +16,7 @@ from tests.mocks.book_mocks import book_data
 from tests.mocks.loan_mocks import loan_expected_data
 
 
-class LoanListViewTest(APITestCase):
+class LoanColaboratorDetailViewTest(APITestCase):
     @classmethod
     def setUpTestData(cls) -> None:
         colaborator_data = user_data.users_data["colaborator_data"]
@@ -63,10 +64,10 @@ class LoanListViewTest(APITestCase):
             cls.copy_three
         )
 
-        cls.BASE_URL = "/api/loans/"
+        cls.BASE_URL = f"/api/loans/{cls.loan.id}/checkout/"
 
-    def test_if_non_authenticated_user_cant_list_loans(self):
-        response = self.client.get(
+    def test_if_an_non_authenticated_user_cant_checkou_an_loan(self):
+        response = self.client.patch(
             path=self.BASE_URL,
         )
 
@@ -96,37 +97,17 @@ class LoanListViewTest(APITestCase):
             message_body
         )
 
-    def test_if_an_colaborator_can_list_all_loans(self):
+    def test_if_student_not_owner_of_a_loan_cant_return_the_loan(self):
         self.client.credentials(
-            HTTP_AUTHORIZATION="Bearer " + self.colaborator_token
+            HTTP_AUTHORIZATION="Bearer " + self.student_two_token
         )
-        response = self.client.get(
+        response = self.client.patch(
             path=self.BASE_URL,
         )
 
-        expected_status_code = 200
-        expected_body = [
-            loan_expected_data.dinamic_self(
-                self.loan,
-                True,
-                self.student,
-                self.copy_one.id,
-                self.book.title
-            ),
-            loan_expected_data.dinamic_self(
-                self.loan_two,
-                True,
-                self.student,
-                self.copy_two.id,
-                self.book.title
-            ),
-            loan_expected_data.dinamic_self(
-                self.loan_three,
-                True,
-                self.student_two,
-                self.copy_three.id,
-                self.book.title
-            )
+        expected_status_code = 403
+        expected_body = user_expected_data.expected_data[
+            "non_permission"
         ]
 
         message_status_code = user_message_data.message_status_code(
@@ -137,44 +118,36 @@ class LoanListViewTest(APITestCase):
         ]
 
         response_status_code = response.status_code
-        response_body = response.json()["results"]
+        response_body = response.json()
 
         self.assertEqual(
             expected_status_code,
             response_status_code,
             message_status_code
         )
-        self.assertListEqual(
+        self.assertDictEqual(
             expected_body,
             response_body,
             message_body
         )
 
-    def test_if_a_student_can_list_own_loans(self):
+    def test_if_student_owner_of_a_loan_can_return_the_loan(self):
         self.client.credentials(
             HTTP_AUTHORIZATION="Bearer " + self.student_token
         )
-        response = self.client.get(
+        response = self.client.patch(
             path=self.BASE_URL,
         )
 
         expected_status_code = 200
-        expected_body = [
-            loan_expected_data.dinamic_self(
-                self.loan,
-                True,
-                self.student,
-                self.copy_one.id,
-                self.book.title
-            ),
-            loan_expected_data.dinamic_self(
-                self.loan_two,
-                True,
-                self.student,
-                self.copy_two.id,
-                self.book.title
-            )
-        ]
+        expected_body = loan_expected_data.dinamic_self(
+            self.loan,
+            False,
+            self.student,
+            self.copy_one.id,
+            self.book.title,
+            returned_at=dt.now().date()
+        )
 
         message_status_code = user_message_data.message_status_code(
             expected_status_code
@@ -184,14 +157,52 @@ class LoanListViewTest(APITestCase):
         ]
 
         response_status_code = response.status_code
-        response_body = response.json()["results"]
+        response_body = response.json()
 
         self.assertEqual(
             expected_status_code,
             response_status_code,
             message_status_code
         )
-        self.assertListEqual(
+        self.assertDictEqual(
+            expected_body,
+            response_body,
+            message_body
+        )
+
+    def test_if_student_cant_checkout_an_already_checkouted_loan(self):
+        loan_checkouted = self.loan
+        loan_checkouted.is_active = False
+        loan_checkouted.save()
+
+        self.client.credentials(
+            HTTP_AUTHORIZATION="Bearer " + self.student_token
+        )
+        response = self.client.patch(
+            path=self.BASE_URL,
+        )
+
+        expected_status_code = 409
+        expected_body = {
+            "detail": "This loan has alredy been delivered"
+        }
+
+        message_status_code = user_message_data.message_status_code(
+            expected_status_code
+        )
+        message_body = user_message_data.message_data[
+            "message_body_is_correct"
+        ]
+
+        response_status_code = response.status_code
+        response_body = response.json()
+
+        self.assertEqual(
+            expected_status_code,
+            response_status_code,
+            message_status_code
+        )
+        self.assertDictEqual(
             expected_body,
             response_body,
             message_body

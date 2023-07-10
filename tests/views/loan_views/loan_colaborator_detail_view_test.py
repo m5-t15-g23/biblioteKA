@@ -142,12 +142,14 @@ class LoanColaboratorDetailViewTest(APITestCase):
         expected_body = [
             loan_expected_data.dinamic_self(
                 self.loan,
+                True,
                 self.student,
                 self.copy_one.id,
                 self.book.title
             ),
             loan_expected_data.dinamic_self(
                 self.loan_two,
+                True,
                 self.student,
                 self.copy_two.id,
                 self.book.title
