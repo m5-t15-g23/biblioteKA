@@ -10,5 +10,8 @@ class Copy(models.Model):
         related_name="copies"
     )
 
+    def __str__(self) -> str:
+        return f"<User [{self.id}] -> {self.book}/{self.is_avaliable}>"
+
     class Meta:
         ordering = ["id"]

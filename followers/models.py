@@ -13,5 +13,8 @@ class Follower(models.Model):
         on_delete=models.CASCADE
     )
 
+    def __str__(self) -> str:
+        return f"<User [{self.id}] -> {self.student}/{self.book_followed}>"
+
     class Meta:
         ordering = ["id"]

@@ -14,5 +14,8 @@ class Loan(models.Model):
         "copies.Copy", on_delete=models.PROTECT, related_name="loans"
     )
 
+    def __str__(self) -> str:
+        return f"<User [{self.id}] -> {self.user}/{self.is_active}>"
+
     class Meta:
         ordering = ["id"]

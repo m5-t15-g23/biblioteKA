@@ -32,5 +32,8 @@ class Book(models.Model):
         related_name="books",
     )
 
+    def __str__(self) -> str:
+        return f"<User [{self.id}] -> {self.title}>"
+
     class Meta:
         ordering = ["id"]
