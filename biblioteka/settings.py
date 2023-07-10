@@ -190,7 +190,8 @@ EMAIL_HOST_PASSWORD = os.getenv("EMAIL_HOST_PASSWORD")
 
 SPECTACULAR_SETTINGS = {
     "TITLE": "biblioteKa",
-    "DESCRIPTION": "A library API",
+    "DESCRIPTION": "Handled API for bookstores.\n"
+                   "It porpuse is to manage books stock and students loans.",
     "VERSION": "1.0.0",
     "SERVE_INCLUDE_SCHEMA": False,
 }
