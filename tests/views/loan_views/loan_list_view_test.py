@@ -55,8 +55,12 @@ class LoanListViewTest(APITestCase):
             cls.copy_one
         )
         cls.loan_two = loan_factories.create_loan(
-            cls.student_two,
+            cls.student,
             cls.copy_two
+        )
+        cls.loan_three = loan_factories.create_loan(
+            cls.student_two,
+            cls.copy_three
         )
 
         cls.BASE_URL = "/api/loans/"
@@ -110,7 +114,58 @@ class LoanListViewTest(APITestCase):
             ),
             loan_expected_data.dinamic_self(
                 self.loan_two,
+                self.student,
+                self.copy_two.id,
+                self.book.title
+            ),
+            loan_expected_data.dinamic_self(
+                self.loan_three,
                 self.student_two,
+                self.copy_three.id,
+                self.book.title
+            )
+        ]
+
+        message_status_code = user_message_data.message_status_code(
+            expected_status_code
+        )
+        message_body = user_message_data.message_data[
+            "message_body_is_correct"
+        ]
+
+        response_status_code = response.status_code
+        response_body = response.json()["results"]
+
+        self.assertEqual(
+            expected_status_code,
+            response_status_code,
+            message_status_code
+        )
+        self.assertListEqual(
+            expected_body,
+            response_body,
+            message_body
+        )
+
+    def test_if_a_student_can_list_own_loans(self):
+        self.client.credentials(
+            HTTP_AUTHORIZATION="Bearer " + self.student_token
+        )
+        response = self.client.get(
+            path=self.BASE_URL,
+        )
+
+        expected_status_code = 200
+        expected_body = [
+            loan_expected_data.dinamic_self(
+                self.loan,
+                self.student,
+                self.copy_one.id,
+                self.book.title
+            ),
+            loan_expected_data.dinamic_self(
+                self.loan_two,
+                self.student,
                 self.copy_two.id,
                 self.book.title
             )
