@@ -60,6 +60,10 @@ class UserDetailView(generics.RetrieveUpdateAPIView):
             message = "User didn't have loans yet"
             raise StudentLoanException(message)
 
+        if student.status_for_loan is False:
+            message = "User already blocked"
+            raise StudentLoanException(message)
+
         first_loan_return_date = first_loan.loan_return
         now = dt.now().date()
         loan_date_subtraction = now - first_loan_return_date
