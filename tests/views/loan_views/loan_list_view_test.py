@@ -15,7 +15,7 @@ from tests.mocks.book_mocks import book_data
 from tests.mocks.loan_mocks import loan_data, loan_expected_data
 
 
-class LoanCopyDetailViewTest(APITestCase):
+class LoanListViewTest(APITestCase):
     @classmethod
     def setUpTestData(cls) -> None:
         colaborator_data = user_data.users_data["colaborator_data"]
@@ -59,9 +59,9 @@ class LoanCopyDetailViewTest(APITestCase):
             cls.copy_two
         )
 
-        cls.BASE_URL = f"/api/loans/copy/{str(cls.copy_one.id)}/"
+        cls.BASE_URL = "/api/loans/"
 
-    def test_if_non_authenticated_user_cant_list_loans_by_copy_id(self):
+    def test_if_non_authenticated_user_cant_list_loans(self):
         response = self.client.get(
             path=self.BASE_URL,
         )
@@ -92,58 +92,29 @@ class LoanCopyDetailViewTest(APITestCase):
             message_body
         )
 
-    def test_if_an_colaborator_can_list_loans_by_copy_id(self):
+    def test_if_an_colaborator_can_list_all_loans(self):
         self.client.credentials(
             HTTP_AUTHORIZATION="Bearer " + self.colaborator_token
-        )
-        response = self.client.get(
-            path=self.BASE_URL
-        )
-
-        expected_status_code = 200
-        expected_body = loan_expected_data.dinamic_self(
-            self.loan,
-            self.student,
-            self.copy_one.id,
-            self.book.title
-        )
-
-        message_status_code = user_message_data.message_status_code(
-            expected_status_code
-        )
-        message_body = user_message_data.message_data[
-            "message_body_is_correct"
-        ]
-
-        response_status_code = response.status_code
-        response_body = response.json()["results"][0]
-
-        self.assertEqual(
-            expected_status_code,
-            response_status_code,
-            message_status_code
-        )
-        self.assertDictEqual(
-            expected_body,
-            response_body,
-            message_body
-        )
-
-    def test_if_a_student_can_list_own_loans_by_copy_id(self):
-        self.client.credentials(
-            HTTP_AUTHORIZATION="Bearer " + self.student_token
         )
         response = self.client.get(
             path=self.BASE_URL,
         )
 
         expected_status_code = 200
-        expected_body = loan_expected_data.dinamic_self(
-            self.loan,
-            self.student,
-            self.copy_one.id,
-            self.book.title
-        )
+        expected_body = [
+            loan_expected_data.dinamic_self(
+                self.loan,
+                self.student,
+                self.copy_one.id,
+                self.book.title
+            ),
+            loan_expected_data.dinamic_self(
+                self.loan_two,
+                self.student_two,
+                self.copy_two.id,
+                self.book.title
+            )
+        ]
 
         message_status_code = user_message_data.message_status_code(
             expected_status_code
@@ -153,14 +124,14 @@ class LoanCopyDetailViewTest(APITestCase):
         ]
 
         response_status_code = response.status_code
-        response_body = response.json()["results"][0]
+        response_body = response.json()["results"]
 
         self.assertEqual(
             expected_status_code,
             response_status_code,
             message_status_code
         )
-        self.assertDictEqual(
+        self.assertListEqual(
             expected_body,
             response_body,
             message_body
