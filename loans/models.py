@@ -15,7 +15,7 @@ class Loan(models.Model):
     )
 
     def __str__(self) -> str:
-        return f"<User [{self.id}] -> {self.user}/{self.is_active}>"
+        return f"<Loan [{self.id}] -> {self.user}/{self.is_active}>"
 
     class Meta:
         ordering = ["id"]

@@ -11,7 +11,7 @@ class Copy(models.Model):
     )
 
     def __str__(self) -> str:
-        return f"<User [{self.id}] -> {self.book}/{self.is_avaliable}>"
+        return f"<Copy [{self.id}] -> {self.book.title}/{self.is_avaliable}>"
 
     class Meta:
         ordering = ["id"]

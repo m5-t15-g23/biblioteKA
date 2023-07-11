@@ -14,7 +14,7 @@ class Follower(models.Model):
     )
 
     def __str__(self) -> str:
-        return f"<User [{self.id}] -> {self.student}/{self.book_followed}>"
+        return f"<Follower [{self.id}] -> {self.student}/{self.book_followed}>"
 
     class Meta:
         ordering = ["id"]

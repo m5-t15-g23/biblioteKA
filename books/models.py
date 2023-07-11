@@ -33,7 +33,7 @@ class Book(models.Model):
     )
 
     def __str__(self) -> str:
-        return f"<User [{self.id}] -> {self.title}>"
+        return f"<Book [{self.id}] -> {self.title}>"
 
     class Meta:
         ordering = ["id"]
