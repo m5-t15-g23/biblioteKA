@@ -6,10 +6,9 @@ def send_mail_on_change(book_title, availability, recipient_list):
     status_for_book = "avaliable" if availability is True else "unavaliable"
     interaction = ":)" if availability is True else ":("
 
-    subject = (f"We have news! The book {book_title} is "
-               f"{status_for_book} {interaction}")
+    subject = "We have news!"
     message = (f"The availability of the book "
-               f"{book_title} is {status_for_book}")
+               f"{book_title} is {status_for_book} {interaction}")
     from_email = settings.EMAIL_HOST_USER
 
     send_mail(
