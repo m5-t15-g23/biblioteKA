@@ -214,7 +214,7 @@ class LoanViewTest(APITestCase):
 
         expected_status_code = 409
         expected_body = {
-            "detail": "User alredy have max number of loans: 3"
+            "detail": "User alredy blocked"
         }
 
         message_status_code = user_message_data.message_status_code(

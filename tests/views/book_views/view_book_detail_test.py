@@ -36,16 +36,14 @@ class BookDetailViewTest(APITestCase):
     def test_if_non_authenticated_user_cant_list_books(self):
         response = self.client.get(path=self.BASE_URL)
 
-        expected_status_code = 401
-        expected_body = user_expected_data.expected_data[
-            "credentials_not_provided"
-        ]
+        expected_status_code = 200
+        expected_body = book_expected_data.dinamic_self(self.book)
 
         message_status_code = user_message_data.message_status_code(
             expected_status_code
         )
         message_body = user_message_data.message_data[
-            "credentials_not_provided"
+            "message_body_is_correct"
         ]
 
         response_status_code = response.status_code

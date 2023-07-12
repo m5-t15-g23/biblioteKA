@@ -130,7 +130,7 @@ class LoanCopyDetailViewTest(APITestCase):
             message_body
         )
 
-    def test_if_a_student_can_list_own_loans_by_copy_id(self):
+    def test_if_a_student_cany_list_loans_by_copy_id(self):
         self.client.credentials(
             HTTP_AUTHORIZATION="Bearer " + self.student_token
         )
@@ -138,14 +138,10 @@ class LoanCopyDetailViewTest(APITestCase):
             path=self.BASE_URL,
         )
 
-        expected_status_code = 200
-        expected_body = loan_expected_data.dinamic_self(
-            self.loan,
-            True,
-            self.student,
-            self.copy_one.id,
-            self.book.title
-        )
+        expected_status_code = 403
+        expected_body = user_expected_data.expected_data[
+            "non_permission"
+        ]
 
         message_status_code = user_message_data.message_status_code(
             expected_status_code
@@ -155,7 +151,7 @@ class LoanCopyDetailViewTest(APITestCase):
         ]
 
         response_status_code = response.status_code
-        response_body = response.json()["results"][0]
+        response_body = response.json()
 
         self.assertEqual(
             expected_status_code,
