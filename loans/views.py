@@ -34,7 +34,7 @@ class LoanView(generics.CreateAPIView):
         user = self.request.user
 
         if user.status_for_loan is False:
-            message = "User alredy have max number of loans: 3"
+            message = "User alredy blocked"
             raise LoanIsNotStatusAvaliable(message)
 
         if book.disponibility is False:

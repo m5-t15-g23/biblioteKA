@@ -344,6 +344,21 @@ Formato da Resposta
 }
 ```
 
+Formato da Resposta caso o usuário esteja bloqueado
+`POST /loans/:book_id/ - FORMATO DA RESPOSTA - STATUS 201`
+```json
+{
+	"detail": "User alredy have max number of loans: 3"
+}
+```
+
+Formato da Resposta caso o livro não esteja disponível
+`POST /loans/:book_id/ - FORMATO DA RESPOSTA - STATUS 201`
+```json
+{
+	"detail": "This book is not available, follow to checkavailability status."
+}
+```
 <h2 align ='center'> Listando todos os empréstimos </h2>
 
 Essa é uma rota exclusiva de Colaboradores. <br/>
