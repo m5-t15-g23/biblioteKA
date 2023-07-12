@@ -10,6 +10,52 @@ Biblioteka é uma API escrita em Django feita para o controle de estoque e geren
   <a href="#endpoints">Endpoints</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 </p>
 
+## Rodando Localmente
+
+1. Crie suas variáveis de ambiente seguindo o .env.example:
+
+2. Crie seu ambiente virtual:
+```bash
+python -m venv venv
+```
+3. Ative seu venv:
+```bash
+# Linux:
+source venv/bin/activate
+
+# Windows (Powershell):
+.\venv\Scripts\activate
+
+# Windows (Git Bash):
+source venv/Scripts/activate
+```
+4. Instale as dependências:
+```bash
+pip install -r requirements.txt
+```
+
+-- Rodando os tests:
+1. Para rodar todos os testes:
+```bash 
+pytest --testdox
+```
+1. Para rodar testes específicos:
+```bash 
+pytest --testdox ./test/caminho para o teste específico
+```
+
+-- Rodando Servidor
+6. Rode as migrações:
+```bash
+python manage.py migrate
+```
+
+57 Rode o servidor:
+```bash
+python manage.py runserver
+```
+- O servidor será rodado na porta 8000 do localhost.
+
 ## **Endpoints**
 
 A API tem um total de 19 endpoints, sendo: <br/>
@@ -17,7 +63,8 @@ Usuários Estudantes - podendo cadastrar seu perfil, relizar empréstimos de liv
 Usuário Colaboradores - podendo registrar novos livros, listar usuários, listar empréstimo, bloquear usuários, etc..
 
 <blockquote> Para utilizar o WorkSpace do Insomnia, basta importa-lo do Repositório.
-Dentro do Insmonia temos variáveis de ambiente que precisam ser preenchidas corretamente, segue indicação:
+Dentro do Insmonia temos variáveis de ambiente tanto para rodar o deploy da api como para rodar localmente em sua máquina.
+E dentro das variáveis de ambiente, temos algumas que precisam ser preenchidas corretamente, para o uso das autenticações das rotas, segue indicação:
 	"colaborator_token": Campo Request => [USERS][Login] POST Colaborator | Campo Filter: $.access,
 	"student_token": Campo Request => [USERS][Login] POST Student | Campo Filter: $.access,
 	"student_token2": Campo Request => [USERS][Login] POST Student 2 | Campo Filter: $.access,
