@@ -62,13 +62,13 @@ A API tem um total de 19 endpoints, sendo: <br/>
 Usuários Estudantes - podendo cadastrar seu perfil, relizar empréstimos de livros e segui-los a fim de receber notificações, etc... <br/>
 Usuário Colaboradores - podendo registrar novos livros, listar usuários, listar empréstimo, bloquear usuários, etc..
 
-<blockquote> Para utilizar o WorkSpace do Insomnia, basta importa-lo do Repositório.
-Dentro do Insmonia temos variáveis de ambiente tanto para rodar o deploy da api como para rodar localmente em sua máquina.
-E dentro das variáveis de ambiente, temos algumas que precisam ser preenchidas corretamente, para o uso das autenticações das rotas, segue indicação:
-	"colaborator_token": Campo Request => [USERS][Login] POST Colaborator | Campo Filter: $.access,
-	"student_token": Campo Request => [USERS][Login] POST Student | Campo Filter: $.access,
-	"student_token2": Campo Request => [USERS][Login] POST Student 2 | Campo Filter: $.access,
-	"student_to_recive_email_token": Campo Request => [USERS][Login] POST Student To Recieve Email | Campo Filter: $.access
+<blockquote> Para utilizar o WorkSpace do Insomnia, basta importa-lo do Repositório. <br/>
+Dentro do Insmonia temos variáveis de ambiente tanto para rodar o deploy da api como para rodar localmente em sua máquina. <br/>
+E dentro das variáveis de ambiente, temos algumas que precisam ser preenchidas corretamente, para o uso das autenticações das rotas, segue indicação: <br/>
+	"colaborator_token": Campo Request => [USERS][Login] POST Colaborator | Campo Filter: $.access, <br/>
+	"student_token": Campo Request => [USERS][Login] POST Student | Campo Filter: $.access, <br/>
+	"student_token2": Campo Request => [USERS][Login] POST Student 2 | Campo Filter: $.access, <br/>
+	"student_to_recive_email_token": Campo Request => [USERS][Login] POST Student To Recieve Email | Campo Filter: $.access <br/>
 </blockquote>
  <img alt="JSON" title="JSON" src="./assets/insomnia_fullfill_variables_enviroment.png" />
 
