@@ -74,7 +74,8 @@ E dentro das variáveis de ambiente, temos algumas que precisam ser preenchidas 
 
 <br>
 
-A url base da API é https://biblioteka.up.railway.app/api
+A url base da API é https://biblioteka.up.railway.app/api <br/>
+A url base local é  http://127.0.0.1:8000/api
 
 ## Rotas que não precisam de autenticação
 
