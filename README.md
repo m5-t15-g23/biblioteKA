@@ -635,7 +635,7 @@ Essa é uma rota exclusiva de Colaboradores. <br/>
 ```
 
 Formato da Resposta caso o estudante não tenha empréstimos
-`PATCH /users/:user_id/ - FORMATO DA RESPOSTA - STATUS 200`
+`PATCH /users/:user_id/ - FORMATO DA RESPOSTA - STATUS 406`
 ```json
 {
 	"detail": "User didn't have loans yet"
@@ -656,7 +656,7 @@ Formato da Resposta caso o estudante já esteja bloqueado
 }
 ```
 Formato da Resposta caso estudante possua empréstimos atrasados
-`PATCH /users/:user_id/ - FORMATO DA RESPOSTA - STATUS 406`
+`PATCH /users/:user_id/ - FORMATO DA RESPOSTA - STATUS 200`
 ```json
 {
 	"id": 5,
