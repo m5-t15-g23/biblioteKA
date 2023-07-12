@@ -78,7 +78,7 @@ class LoanView(generics.CreateAPIView):
 
 class LoanCopyDetailView(generics.ListAPIView):
     authentication_classes = [JWTAuthentication]
-    permission_classes = [IsAuthenticated]
+    permission_classes = [IsColaborator]
 
     serializer_class = LoanSerializer
     lookup_url_kwarg = "copy_id"
