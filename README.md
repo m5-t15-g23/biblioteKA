@@ -160,7 +160,9 @@ A listagem de todos os livros vem paginada, sendo 5 livros por página. <br/>
 Podemos aqui também listar livros por id, adicionando um id de book como url params na rota.
 
 `POST /books/ - FORMATO DA REQUISIÇÃO`
-Sem body.
+```
+Sem body
+```
 
 Formato da Resposta
 `POST /books/ - FORMATO DA RESPOSTA - STATUS 200`
@@ -185,7 +187,9 @@ Formato da Resposta
 }
 ```
 `POST /books/:book_id/ - FORMATO DA REQUISIÇÃO`
-Sem body.
+```
+Sem body
+```
 
 Formato da Resposta
 `POST /books/:book_id/ - FORMATO DA RESPOSTA - STATUS 200`
@@ -244,7 +248,9 @@ Formato da Resposta
 Essa é uma rota exclusiva de Colaboradores.
 
 `GET /copies/ - FORMATO DA REQUISIÇÃO`
-Sem body.
+```
+Sem body
+```
 
 Formato da Resposta
 `GET /copies/ - FORMATO DA RESPOSTA - STATUS 200`
@@ -282,7 +288,9 @@ Essa é uma rota exclusiva de Estudantes. <br/>
 Todas as vezes que a disponibilidade de um livro for alterada, o estudante que o segue, receberá em seu email, uma mensagem o avisando do novo stauts de disponibilidade do livro.
 
 `POST /follow/:book_id/ - FORMATO DA REQUISIÇÃO`
+```
 Sem body
+```
 
 Formato da Resposta
 `POST /follow/:book_id/ - FORMATO DA RESPOSTA - STATUS 201`
@@ -302,7 +310,9 @@ Essa é uma rota exclusiva de Estudantes. <br/>
 A listagem dos livros seguidos vem paginada, sendo 5 por página. <br/>
 
 `GET /follow/ - FORMATO DA REQUISIÇÃO`
+```
 Sem body
+```
 
 Formato da Resposta
 `GET /follow/ - FORMATO DA RESPOSTA - STATUS 200`
@@ -329,7 +339,9 @@ Essa é uma rota exclusiva de Colaboradores. <br/>
 A listagem dos livros seguidos vem paginada, sendo 5 por página. <br/>
 
 `GET /follow/colaborator/ - FORMATO DA REQUISIÇÃO`
+```
 Sem body
+```
 
 Formato da Resposta
 `GET /follow/colaborator/ - FORMATO DA RESPOSTA - STATUS 200`
@@ -356,11 +368,15 @@ Essa é uma rota exclusiva de Estudantes. <br/>
 
 
 `GET /unfollow/:book_id/ - FORMATO DA REQUISIÇÃO`
+```
 Sem body
+```
 
 Formato da Resposta
 `GET /unfollow/:book_id/ - FORMATO DA RESPOSTA - STATUS 204`
+```
 Sem body
+```
 
 <h2 align ='center'> Criando empréstimos</h2>
 
@@ -373,7 +389,9 @@ Caso todas as cópias de um livro sejam empretadas, o livro passará a não esta
 
 
 `POST /loans/:book_id/ - FORMATO DA REQUISIÇÃO`
+```
 Sem body
+```
 
 Formato da Resposta
 `POST /loans/:book_id/ - FORMATO DA RESPOSTA - STATUS 201`
@@ -393,7 +411,7 @@ Formato da Resposta
 ```
 
 Formato da Resposta caso o usuário esteja bloqueado
-`POST /loans/:book_id/ - FORMATO DA RESPOSTA - STATUS 201`
+`POST /loans/:book_id/ - FORMATO DA RESPOSTA - STATUS 409`
 ```json
 {
 	"detail": "User alredy have max number of loans: 3"
@@ -401,7 +419,7 @@ Formato da Resposta caso o usuário esteja bloqueado
 ```
 
 Formato da Resposta caso o livro não esteja disponível
-`POST /loans/:book_id/ - FORMATO DA RESPOSTA - STATUS 201`
+`POST /loans/:book_id/ - FORMATO DA RESPOSTA - STATUS 409`
 ```json
 {
 	"detail": "This book is not available, follow to checkavailability status."
@@ -413,7 +431,9 @@ Essa é uma rota exclusiva de Colaboradores. <br/>
 A listagem dos emprésitmos vem paginada, sendo 5 por página. <br/>
 
 `GET /loans/ - FORMATO DA REQUISIÇÃO`
+```
 Sem body
+```
 
 Formato da Resposta
 `GET /loans/ - FORMATO DA RESPOSTA - STATUS 200`
@@ -445,7 +465,9 @@ Essa é uma rota exclusiva de Colaboradores. <br/>
 A listagem dos emprésitmos vem paginada, sendo 5 por página. <br/>
 
 `GET /loans/student/:student_id - FORMATO DA REQUISIÇÃO`
+```
 Sem body
+```
 
 Formato da Resposta
 `GET /loans/student/:student_id - FORMATO DA RESPOSTA - STATUS 200`
@@ -477,7 +499,9 @@ Essa é uma rota exclusiva de Estudantes. <br/>
 A listagem dos emprésitmos vem paginada, sendo 5 por página. <br/>
 
 `GET /loans/student/:student_id/ - FORMATO DA REQUISIÇÃO`
+```
 Sem body
+```
 
 Formato da Resposta
 `GET /loans/student/:student_id/ - FORMATO DA RESPOSTA - STATUS 200`
@@ -509,7 +533,9 @@ Essa é uma rota exclusiva de Colaboradores. <br/>
 A listagem dos emprésitmos vem paginada, sendo 5 por página. <br/>
 
 `GET /loans/copy/:copy_id/ - FORMATO DA REQUISIÇÃO`
+```
 Sem body
+```
 
 Formato da Resposta
 `GET /loans/copy/:copy_id/ - FORMATO DA RESPOSTA - STATUS 200`
@@ -541,7 +567,9 @@ Essa é uma rota exclusiva de Estudantes. <br/>
 A listagem dos emprésitmos vem paginada, sendo 5 por página. <br/>
 
 `GET /loans/student/:student_id/ - FORMATO DA REQUISIÇÃO`
+```
 Sem body
+```
 
 Formato da Resposta
 `GET /loans/student/:student_id/ - FORMATO DA RESPOSTA - STATUS 200`
@@ -574,7 +602,9 @@ Ao devolver um livro, o empréstimo passará a não estar mais ativado, ocasiona
 Caso, a devolução do empréstimo seja de um livro que não está disponivél, ou seja, todas as cópias alugadas, o mesmo passará a ser disponível, ocasioando em envio de emails para os usuários que seguem o livro.
 
 `GET /loans/loans/:loan_id/checkout/ - FORMATO DA REQUISIÇÃO`
+```
 Sem body
+```
 
 Formato da Resposta
 `GET /loans/loans/:loan_id/checkout/ - FORMATO DA RESPOSTA - STATUS 200`
@@ -612,21 +642,21 @@ Formato da Resposta caso o estudante não tenha empréstimos
 }
 ```
 Formato da Resposta caso o estudante tenha empréstimos não atrasados
-`PATCH /users/:user_id/ - FORMATO DA RESPOSTA - STATUS 200`
+`PATCH /users/:user_id/ - FORMATO DA RESPOSTA - STATUS 406`
 ```json
 {
 	"detail": "User first loan is already in permited period"
 }
 ```
 Formato da Resposta caso o estudante já esteja bloqueado
-`PATCH /users/:user_id/ - FORMATO DA RESPOSTA - STATUS 200`
+`PATCH /users/:user_id/ - FORMATO DA RESPOSTA - STATUS 406`
 ```json
 {
 	"detail": "User already blocked"
 }
 ```
 Formato da Resposta caso estudante possua empréstimos atrasados
-`PATCH /users/:user_id/ - FORMATO DA RESPOSTA - STATUS 200`
+`PATCH /users/:user_id/ - FORMATO DA RESPOSTA - STATUS 406`
 ```json
 {
 	"id": 5,
