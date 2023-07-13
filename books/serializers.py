@@ -11,9 +11,13 @@ class BookSerializer(serializers.ModelSerializer):
 
     def create(self, validated_data: dict) -> Book:
         copies_number = validated_data.get("copies_number")
-        book = Book.objects.create(**validated_data)
+        book_title = validated_data.get("title")
+        book = Book.objects.filter(title=book_title).first()
 
-        for i in range(copies_number):
+        if book is None:
+            book = Book.objects.create(**validated_data)
+
+        for _ in range(copies_number):
             Copy.objects.create(book=book)
 
         return book
