@@ -149,7 +149,7 @@ class BookViewTest(APITestCase):
         )
 
     def test_if_a_colaborator_can_create_a_book(self):
-        data = book_data.book_data["sql"]
+        data = book_data.book_data["sql2"]
 
         self.client.credentials(
             HTTP_AUTHORIZATION="Bearer " + self.colaborator_token

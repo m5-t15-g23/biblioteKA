@@ -16,6 +16,15 @@ book_data = {
         "language": "English",
         "genre": "Education",
         "copies_number": 3
+    },
+    "sql2": {
+        "title": "SQL Practical Guide 2",
+        "author": "Alice Zhao",
+        "description": "A practical guide to use SQL",
+        "page_numbers": 319,
+        "language": "English",
+        "genre": "Education",
+        "copies_number": 3
     }
 }
 
